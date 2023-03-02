@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace shashasha
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] nums = new int[10];
+            int uInput = 0;
+
+            Console.WriteLine("enter a number:");
+            int uInput = Console.ReadLine();
+
+            for (int x = 0; x < nums.Length; x++);
+            {
+                if()
+            }
+
+          
+
+            
+        }
+    }
+}
