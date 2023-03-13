@@ -1,0 +1,36 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GOD_S_CODE
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> godnum = new List<int>();
+            int[,] array1 = new int[9, 9];
+            Random rnd = new Random();
+            int numholder = 0;
+            bool sudoku = true;
+
+
+
+            while (sudoku == true)
+            {
+                numholder = rnd.Next(0, 9);
+                for (int x = 0; x < 9; x++)
+                {
+                    for (int y = 0; y < 9; y++) ;
+                    {
+
+                    }
+
+                }
+            }
+            
+        }
+    }
+}
