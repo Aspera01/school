@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,27 +11,52 @@ namespace GOD_S_CODE
     {
         static void Main(string[] args)
         {
-            List<int> godnum = new List<int>();
+            List<int> godnum = new List<int>(); //{1, 2, 3, 4, 5, 6, 7, 8, 9};
+            List<int> checknum = new List<int>();
             int[,] array1 = new int[9, 9];
             Random rnd = new Random();
             int numholder = 0;
-            bool sudoku = true;
-
-
-
-            while (sudoku == true)
+            bool checker = true;
+            bool duplicate = false;
+            
+            for (int x = 0; x < 9; x++)
             {
-                numholder = rnd.Next(0, 9);
-                for (int x = 0; x < 9; x++)
+                numholder = rnd.Next(1, 9);          // day 1: trying to make a number generator from 1 - 9 that doesn't do duplicates for a couple rows
+                duplicate = false;
+
+                if (godnum[x] == numholder)
                 {
-                    for (int y = 0; y < 9; y++) ;
+                    duplicate = false;
+                }
+
+                if (!duplicate)
+                    godnum[x] = numholder;
+            }
+
+
+            foreach (int num in godnum)
+            {
+                Console.Write(num + " ");
+            }
+            Console.ReadKey();
+
+
+            while (checker == true)
+            {
+
+
+                for (int x = 0; x < 9; x++)             //the plan is, to fill the 9x9 board with numbers, and have a code to check each row and column and every 3x3
+                {
+                    for (int y = 0; y < 9; y++)
                     {
+                        array1[x, y] = godnum[0];
+                        godnum.Remove(0);
 
                     }
 
                 }
             }
-            
+
         }
     }
 }
