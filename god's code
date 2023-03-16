@@ -1,6 +1,7 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -8,54 +9,89 @@ using System.Threading.Tasks;
 
 namespace GOD_S_CODE
 {
-    internal class Program
+    internal class Program                              
     {
+        /// <summary>
+        /// day 1: trying to make a number generator from 1 - 9 that doesn't do duplicates for a couple rows
+        /// day 2: got a row that generate 1-9 and doesn't do duplicates
+        /// day 3: made a duplicate checker for columns but it keeps showing 1 attempts lol (i wish)
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             List<int> fakenum = new List<int>(); // {1, 2, 3, 4, 5, 6, 7, 8, 9};
             List<int> godnum = new List<int>();
+            //List<int> rownum = new List<int>();
             //List<int> checknum = new List<int>();
             int[,] array1 = new int[9, 9];
             Random rnd = new Random();
             int numtaker = 0;
+            int attempts = 0;
             bool checker = true;
-            bool rows = true;                              // day 1: trying to make a number generator from 1 - 9 that doesn't do duplicates for a couple rows
-                                                           // day 2: got a row that generate 1-9 and doesn't do duplicates
+            bool failure = false;
+            int success = 0;
 
-            //while (rows == true)
-            //{
+            while (success == 0)
+            {               
 
-            //}
+                for (int x = 0; x < 9; x++)
+                {
+                    godnum.Clear();
+                    for (int nums = 1; nums < 10; nums++)
+                        godnum.Add(nums);
 
-            for (int x = 0; x < 9; x++)
-            {
-                fakenum.Clear();
-                for (int nums = 1; nums < 10; nums++)
-                    fakenum.Add(nums);
+                    for (int y = 0; y < 9; y++)
+                    {
+                        numtaker = rnd.Next(0, godnum.Count);
+                        array1[x, y] = godnum[numtaker];
+                        godnum.RemoveAt(numtaker);
+                    }
+
+                }
 
                 for (int y = 0; y < 9; y++)
                 {
-                    numtaker = rnd.Next(0, fakenum.Count);
-                    array1[x, y] = fakenum[numtaker];
-                    fakenum.RemoveAt(numtaker);
+                    fakenum.Add(array1[0, y]);
                 }
-                
-            }
 
-            foreach(int array in array1)
+                success = 72;
+
+                for (int x = 1; x < 9; x++)
+                {
+                    int dubs = 0;
+                    for (int ccheck = 0; ccheck < 9; ccheck++)
+                    {
+                        if (array1[x, ccheck] == fakenum[dubs])
+                        {
+                            failure = true;
+                            break;
+                        }
+                        else
+                        {
+                            dubs++;
+                        }
+                    }
+
+                    if (failure)
+                        break;
+                    else
+                    success =- 1;
+                }
+                attempts ++;
+            }
+                    
+            Console.WriteLine("it took " + attempts + " attempts to get this board!");
+
+            for (int rows = 0; rows < 9; rows++)
             {
-                Console.Write(array + "\t");
+                for (int cols = 0; cols < 9; cols++)
+                {
+                    Console.Write(array1[rows, cols] + "\t");
+                }
+                Console.WriteLine();
             }
+                     
             Console.ReadKey();
-
-            //for (int row = 0; row < 9; row++)
-            //{
-            //    for (int col = 0; col < 9; col++)
-            //    {
-            //        Console.Write(array1[row, col] + "\t");
-            //    }
-            //}
-            //Console.ReadKey();
 
             while (checker == true)
             {
