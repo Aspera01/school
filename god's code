@@ -1,6 +1,8 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Data.SqlTypes;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -12,6 +14,8 @@ namespace GOD_S_CODE
     internal class Program                              
     {
         /// <summary>
+        /// new plan: generate a number, check row, column and 3x3 then put, else remove from list.
+        /// the plan is, to fill the 9x9 board with numbers, and have a code to check each row and column and every 3x3
         /// day 1: trying to make a number generator from 1 - 9 that doesn't do duplicates for a couple rows
         /// day 2: got a row that generate 1-9 and doesn't do duplicates
         /// day 3: made a duplicate checker for columns but it keeps showing 1 attempts lol (i wish)
@@ -19,20 +23,18 @@ namespace GOD_S_CODE
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            List<int> fakenum = new List<int>(); // {1, 2, 3, 4, 5, 6, 7, 8, 9};
             List<int> godnum = new List<int>();
-            //List<int> rownum = new List<int>();
-            //List<int> checknum = new List<int>();
             int[,] array1 = new int[9, 9];
             Random rnd = new Random();
             int numtaker = 0;
             int attempts = 0;
-            bool checker = true;
+            int checker = 0;
             bool failure = false;
-            int success = 0;
+            bool success = false;
 
-            while (success == 0)
-            {               
+            while (success == false)
+            {
+                attempts++;
 
                 for (int x = 0; x < 9; x++)
                 {
@@ -51,33 +53,41 @@ namespace GOD_S_CODE
 
                 for (int y = 0; y < 9; y++)
                 {
-                    fakenum.Add(array1[0, y]);
+                    godnum.Add(array1[0, y]);
                 }
 
-                success = 72;
+                checker = 0;
+                failure = false;
 
-                for (int x = 1; x < 9; x++)
+                while (checker < 72)
                 {
-                    int dubs = 0;
-                    for (int ccheck = 0; ccheck < 9; ccheck++)
-                    {
-                        if (array1[x, ccheck] == fakenum[dubs])
-                        {
-                            failure = true;
-                            break;
-                        }
-                        else
-                        {
-                            dubs++;
-                        }
-                    }
 
-                    if (failure)
+                    for (int x = 1; x < 9; x++)
+                    {
+                        int dubs = 0;
+                        for (int ccheck = 0; ccheck < 9; ccheck++)
+                        {
+                            if (array1[x, ccheck] == godnum[dubs])
+                            {
+                                failure = true;
+                                break;
+                            }
+                            else
+                            {
+                                dubs++;
+                            }
+                        }
+                        if (failure == true)
+                            break;
+                    }
+                    if (failure == true)
                         break;
                     else
-                    success =- 1;
+                        checker++;
                 }
-                attempts ++;
+                if (checker == 72)
+                    success = false;
+                Console.WriteLine("an attempt");
             }
                     
             Console.WriteLine("it took " + attempts + " attempts to get this board!");
@@ -92,22 +102,6 @@ namespace GOD_S_CODE
             }
                      
             Console.ReadKey();
-
-            while (checker == true)
-            {
-
-
-                for (int x = 0; x < 9; x++)             //the plan is, to fill the 9x9 board with numbers, and have a code to check each row and column and every 3x3
-                {
-                    for (int y = 0; y < 9; y++)
-                    {
-                        array1[x, y] = godnum[0];
-                        godnum.Remove(0);
-
-                    }
-
-                }
-            }
 
         }
     }
