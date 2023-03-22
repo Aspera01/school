@@ -115,73 +115,37 @@ namespace GOD_S_CODE
 
 
 using System;
-using System.CodeDom;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BingoCardWithLists
+namespace sacred_texts
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            List<int> nums = new List<int> {1,2,3,4,5,6,7,8,9};
-            List<int> newnums = new List<int>();
+            List<int> sacredtexts = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             int[,] arrays = new int[9, 9];
             Random rnd = new Random();
-            int justnum = 0;           
-            int i = 0;
-            int j = 0;
+            int tempholder = 0;
+            bool loops = true;
 
-            for (int x = 0; x < nums.Count; x++)
+            while (loops == true)
             {
-                for(int y = 0; y < nums.Count; y++)
-                {
-                    arrays[x, y] == nums[0];
-                }
 
+                tempholder = rnd.Next(1, sacredtexts.Count);
+
+                for (int x = 0; x < sacredtexts.Count; x++)
+                {
+                    Console.Write(sacredtexts[x] + " ");
+                }
             }
-
-
-
-
-
-
-
-
-            int checkcellx = 5;
-            int checkcelly = 4;
-            //checkcellx = rnd.Next(0, 9);
-            //checkcelly = rnd.Next(0, 9);
-
-            i = (checkcellx / 3) * 3;
-            j = (checkcelly / 3) * 3;
-
-            for (int k = 0; k < 3; k++)
-            {
-                for (int l = 0; l < 3; l++)
-                {
-                    newnums.Add(arrays[i, j]);
-                    j = j + 1;
-                }
-
-                i = i + 1;
-                j = j - 3;
-            }
-
-
-            for (int y = 0; y < newnums.Count; y++)
-                {
-                    Console.Write(newnums[y] + " ");
-                }
-            
             Console.ReadKey();
-
-
         }
     }
 }
+
