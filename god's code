@@ -149,3 +149,141 @@ namespace sacred_texts
     }
 }
 
+
+
+
+//plan b
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> nums = new List<int>();
+            int[,] arrays = new int[9, 9];
+            Random rnd = new Random();
+            int randnum = 0;
+            int i = 0;
+            int j = 0;
+            bool failure = false;
+            bool colschecker = false;
+            bool rowschecker = false;
+            bool cellchecker = false;
+
+            for (int x = 0; x < 9; x++)
+            {
+                nums.Clear();
+                for (int z = 1; z < 10; z++)
+                    nums.Add(z);
+
+                for (int y = 0; y < 9; y++)
+                {
+                    randnum = rnd.Next(0, nums.Count);
+                    arrays[x, y] = nums[randnum];
+                    nums.RemoveAt(randnum);
+
+                    int rows = 0;
+                    int cols = 0;
+
+                    for (int p = 0; p < 9; p++)
+                    {
+                        colschecker = false;
+                        if (arrays[x, y] == arrays[p, cols + 1])
+                            colschecker = true;
+                        if (colschecker == true)
+                        {
+                            failure = true;
+                            break;
+                        }
+                        else
+                            cols++;
+                    }
+
+                    int rows2 = 0;
+                    int cols2 = 0;
+
+                    //for (int o = 0; 0 < 9; o++)
+                    //{
+                    //    rowschecker = false;
+                    //    if (arrays[x, y] == arrays[rows + 1, y])
+                    //        rowschecker = true;
+                    //    if (rowschecker == true)
+                    //    {
+                    //        failure = true;
+                    //        break;
+                    //    }
+                    //    else
+                    //        rows++;
+
+                    //}
+
+                    //for (int u = 0; u < 3; u++)
+                    //{
+                    //    i = (u / 3) * 3;
+                    //    j = (u / 3) * 3;
+
+                    //    for (int k = 0; k < 3; k++)
+                    //    {
+                    //        for (int l = 0; l < 3; l++)
+                    //        {
+                    //            nums.Add(arrays[i, j]);
+                    //            j = j + 1;
+                    //        }
+
+                    //        i = i + 1;
+                    //        j = j - 3;
+                    //    }
+                    //}
+
+
+                }
+                Console.ReadKey();
+            }
+
+            //for (int x = 0; x < nums.Count; x++)
+            //{
+            //    for (int y = 0; y < nums.Count; y++)
+            //    {
+            //        arrays[x, y] == nums[x];
+            //    }
+
+            //}
+
+
+
+
+
+
+
+
+            //int checkcellx = 5;
+            //int checkcelly = 4;
+            ////checkcellx = rnd.Next(0, 9);
+            ////checkcelly = rnd.Next(0, 9);
+
+            //i = (checkcellx / 3) * 3;
+            //j = (checkcelly / 3) * 3;
+
+            //for (int k = 0; k < 3; k++)
+            //{
+            //    for (int l = 0; l < 3; l++)
+            //    {
+            //        newnums.Add(arrays[i, j]);
+            //        j = j + 1;
+            //    }
+
+            //    i = i + 1;
+            //    j = j - 3;
+            //}
+
+
+            //for (int y = 0; y < newnums.Count; y++)
+            //    {
+            //        Console.Write(newnums[y] + " ");
+            //    }
+
+            //Console.ReadKey();
+
+
+        }
+    }
+}
