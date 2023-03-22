@@ -1,3 +1,4 @@
+//plan A
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -152,7 +153,7 @@ namespace sacred_texts
 
 
 
-//plan b
+//plan B
 {
     internal class Program
     {
@@ -161,98 +162,136 @@ namespace sacred_texts
             List<int> nums = new List<int>();
             int[,] arrays = new int[9, 9];
             Random rnd = new Random();
+            int tempnum = 0;
             int randnum = 0;
+            int shet = 81;
+            int attempts = -1;
             int i = 0;
-            int j = 0;
+            int j = 0;           
             bool failure = false;
             bool colschecker = false;
             bool rowschecker = false;
             bool cellchecker = false;
 
-            for (int x = 0; x < 9; x++)
-            {
-                nums.Clear();
-                for (int z = 1; z < 10; z++)
-                    nums.Add(z);
-
-                for (int y = 0; y < 9; y++)
-                {
-                    randnum = rnd.Next(0, nums.Count);
-                    arrays[x, y] = nums[randnum];
-                    nums.RemoveAt(randnum);
-
-                    int rows = 0;
-                    int cols = 0;
-
-                    for (int p = 0; p < 9; p++)
-                    {
-                        colschecker = false;
-                        if (arrays[x, y] == arrays[p, cols + 1])
-                            colschecker = true;
-                        if (colschecker == true)
-                        {
-                            failure = true;
-                            break;
-                        }
-                        else
-                            cols++;
-                    }
-
-                    int rows2 = 0;
-                    int cols2 = 0;
-
-                    //for (int o = 0; 0 < 9; o++)
-                    //{
-                    //    rowschecker = false;
-                    //    if (arrays[x, y] == arrays[rows + 1, y])
-                    //        rowschecker = true;
-                    //    if (rowschecker == true)
-                    //    {
-                    //        failure = true;
-                    //        break;
-                    //    }
-                    //    else
-                    //        rows++;
-
-                    //}
-
-                    //for (int u = 0; u < 3; u++)
-                    //{
-                    //    i = (u / 3) * 3;
-                    //    j = (u / 3) * 3;
-
-                    //    for (int k = 0; k < 3; k++)
-                    //    {
-                    //        for (int l = 0; l < 3; l++)
-                    //        {
-                    //            nums.Add(arrays[i, j]);
-                    //            j = j + 1;
-                    //        }
-
-                    //        i = i + 1;
-                    //        j = j - 3;
-                    //    }
-                    //}
-
-
-                }
-                Console.ReadKey();
-            }
-
-            //for (int x = 0; x < nums.Count; x++)
+            //for (int n = 0; n < 9; n++)
             //{
-            //    for (int y = 0; y < nums.Count; y++)
-            //    {
-            //        arrays[x, y] == nums[x];
-            //    }
-
+            //    nums.Clear();
+            //    for (int m = 1; m < 10; m++)
+            //        nums.Add(m);
             //}
 
+            //randnum = rnd.Next(0, nums.Count);
+            //tempnum = nums[randnum];
+            //nums.RemoveAt(randnum);
+
+            while (shet > 1)
+            {
+            failure:
+                attempts++;
+                int xplace = -1;
+                int yplace = -1;
+                for (int x = 0; x < 9; x++)
+                {
+                    nums.Clear();
+                    for (int m = 1; m < 10; m++)
+                        nums.Add(m);
+
+                    xplace++;
+                    if (xplace > 0)
+                        yplace = -1;
+                    //if (yplace > 9)
+                    //    yplace = -1;
 
 
+                    for (int y = 0; y < 9; y++)
+                    {
+                        yplace++;
+                        newnum:
+                        randnum = rnd.Next(0, nums.Count);
+                        tempnum = nums[randnum];
+                        nums.RemoveAt(randnum);
 
+                        int cols = 0;
 
+                        for (int q = 0; q < 9; q++)
+                        {
+                            colschecker = false;
+                            if (cols == y)
+                                failure = false;
+                            if (arrays[xplace, cols] == tempnum)
+                                colschecker = true;
+                            if (colschecker == true)
+                            {
+                                if(nums.Count == 0)
+                                {
+                                    goto failure;
+                                }
+                                else
+                                {
+                                    failure = true;
+                                    goto newnum;
+                                }
+                            }
+                            else
+                                cols++;
+                        }
+                        int rows = 0;
+                        if (failure != true)
+                        {
+                            for (int p = 0; p < 9; p++)
+                            {
 
+                                rowschecker = false;
+                                if (rows == x)
+                                    failure = false;
+                                if (arrays[rows, yplace] == tempnum)
+                                    rowschecker = true;
+                                if (rowschecker == true)
+                                {
+                                    if (nums.Count == 0)
+                                    {
+                                        goto failure;
+                                    }
+                                    else
+                                    {
+                                        failure = true;
+                                        goto newnum;
+                                    }
+                                }
+                                else
+                                    rows++;
+                            }
+                            if (rowschecker == false && colschecker == false)
+                            {
+                                arrays[x, y] = tempnum;
+                                shet--;
+                            }
+
+                        }
+
+                    }
+
+                }
+                attempts++;
+                Console.WriteLine("attempt " + attempts);
+            }         
+            //for (int u = 0; u < 3; u++)
+            //{
+            //    i = (u / 3) * 3;
+            //    j = (u / 3) * 3;
+
+            //    for (int k = 0; k < 3; k++)
+            //    {
+            //        for (int l = 0; l < 3; l++)
+            //        {
+            //            nums.Add(arrays[i, j]);
+            //            j = j + 1;
+            //        }
+
+            //        i = i + 1;
+            //        j = j - 3;
+            //    }
+            //}
 
 
             //int checkcellx = 5;
@@ -282,7 +321,18 @@ namespace sacred_texts
             //    }
 
             //Console.ReadKey();
+            //Console.Write(attempts + " attempts");
 
+            for (int xx = 0; xx < arrays.GetLength(0); xx++)
+            {
+                for (int yy = 0; yy < arrays.GetLength(1); yy++)
+                {
+                    Console.Write(arrays[xx, yy] + "       ");
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+            Console.ReadKey();
 
         }
     }
