@@ -1,3 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace scratch
 {
     internal class Program
     {
@@ -10,8 +17,12 @@
             int randnum = 0;
             int limit = 81;
             int attempts = 0;
+            int xplace = -1;
+            int yplace = -1;
+            int xcell = 0;
+            int ycell = 0;
             int i = 0;
-            int j = 0;            
+            int j = 0;
             bool failure = false;
             bool success = false;
             bool colschecker = false;
@@ -19,10 +30,11 @@
             bool cellchecker = false;
 
             while (success == false)
-            {               
+            {
                 arrays = new int[9, 9];
-                int xplace = -1;
-                int yplace = -1;
+                xplace = -1;
+                yplace = -1;
+                limit = 81;
                 for (int x = 0; x < 9; x++)
                 {
                     nums.Clear();
@@ -63,9 +75,9 @@
                             }
                             cols++;
                         }
-                        if (failure == true)                        
+                        if (failure == true)
                             break;
-                        
+
                         int rows = 0;
                         for (int p = 0; p < 9; p++)
                         {
@@ -91,79 +103,60 @@
                             }
                             rows++;
                         }
-                        if (failure == true)                       
+                        if (failure == true)
                             break;
-                        
-                        int cells = 0;
-                        for (int w = 0; w < 9; w++)
+
+                        //int cells = 0;
+                        //for (int w = 0; w < 9; w++)
+                        //{
+                            //x = 5;
+                            //y = 3;
+                        xcell = (x / 3) * 3;
+                        ycell = (y / 3) * 3;
+
+                        for (int k = 0; k < 3; k++)
                         {
-                            int xcell = 0;
-                            int ycell = 0;
-                            i = (xcell / 3) * 3;
-                            j = (ycell / 3) * 3;
-
-                            for (int k = 0; k < 3; k++)
+                            for (int l = 0; l < 3; l++)
                             {
-                                for (int l = 0; l < 3; l++)
+                                //if (xcell == x && ycell == y)
+                                //  continue;
+                                if (arrays[xcell, ycell] == tempnum)
                                 {
-                                    nums.Add(arrays[i, j]);
-                                    j++;
+                                    failure = true;
+                                    break;
                                 }
-
-                                i++;
-                                j = j - 3;
+                                ycell++;
                             }
-                        }
-                        if (failure == true)                        
-                            break;    
-                        
+
+                            xcell++;
+                            ycell = ycell - 3;
+                        }                         
+                        //}
+                        if (failure == true)
+                            break;
+
                         if (rowschecker == false && colschecker == false && cellchecker == false)
                         {
                             arrays[x, y] = tempnum;
-                            limit = limit - 1;
+                            limit--;
                             //Console.Write(arrays[x, y] + " ");
                         }
-                        
+
                     }
                     if (failure == true)
                         break;
 
                 }
-                attempts++;
-                Console.WriteLine("attempt " + attempts);
-            }
-            //for (int u = 0; u < 3; u++)
-            //{
-            //    i = (u / 3) * 3;
-            //    j = (u / 3) * 3;
-
-            //    for (int k = 0; k < 3; k++)
-            //    {
-            //        for (int l = 0; l < 3; l++)
-            //        {
-            //            nums.Add(arrays[i, j]);
-            //            j = j + 1;
-            //        }
-
-            //        i = i + 1;
-            //        j = j - 3;
-            //    }
-            //}
-
-
-            //int checkcellx = 5;
-            //int checkcelly = 4;
-            ////checkcellx = rnd.Next(0, 9);
-            ////checkcelly = rnd.Next(0, 9);
-
-
-            //for (int y = 0; y < newnums.Count; y++)
-            //    {
-            //        Console.Write(newnums[y] + " ");
-            //    }
-
-            //Console.ReadKey();
-            //Console.Write(attempts + " attempts");
+                if (limit == 0)
+                {
+                    success = true;
+                }
+                else
+                {
+                    attempts++;
+                    Console.WriteLine("attempt " + attempts);
+                }
+            }           
 
             for (int xx = 0; xx < arrays.GetLength(0); xx++)
             {
