@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,14 +16,15 @@ namespace scratch
             Random rnd = new Random();
             int tempnum = 0;
             int randnum = 0;
+            int cols = 0;
+            int rows = 0;
             int limit = 81;
             int attempts = 0;
             int xplace = -1;
             int yplace = -1;
             int xcell = 0;
             int ycell = 0;
-            int i = 0;
-            int j = 0;
+
             bool failure = false;
             bool success = false;
             bool colschecker = false;
@@ -32,6 +34,8 @@ namespace scratch
             while (success == false)
             {
                 arrays = new int[9, 9];
+                xcell = 0;
+                ycell = 0;
                 xplace = -1;
                 yplace = -1;
                 limit = 81;
@@ -49,14 +53,18 @@ namespace scratch
 
                     for (int y = 0; y < 9; y++)
                     {
+                        randnum = rnd.Next(0, nums.Count);
+                        tempnum = nums[randnum];
+                        //nums.RemoveAt(randnum);
+
                         yplace++;
-                        int cols = 0;
+                        cols = 0;
 
                         for (int q = 0; q < 9; q++)
                         {
                             colschecker = false;
-                            if (cols == y)
-                                failure = false;
+                            //if (cols == y)
+                            //    failure = false;
                             if (arrays[xplace, cols] == tempnum)
                                 colschecker = true;
                             if (colschecker == true)
@@ -70,7 +78,7 @@ namespace scratch
                                 {
                                     randnum = rnd.Next(0, nums.Count);
                                     tempnum = nums[randnum];
-                                    nums.RemoveAt(randnum);
+                                    //nums.RemoveAt(randnum);
                                 }
                             }
                             cols++;
@@ -78,13 +86,13 @@ namespace scratch
                         if (failure == true)
                             break;
 
-                        int rows = 0;
+                        rows = 0;
                         for (int p = 0; p < 9; p++)
                         {
 
                             rowschecker = false;
-                            if (rows == x)
-                                failure = false;
+                            //if (rows == x)
+                            //    failure = false;
                             if (arrays[rows, yplace] == tempnum)
                                 rowschecker = true;
                             if (rowschecker == true)
@@ -98,7 +106,7 @@ namespace scratch
                                 {
                                     randnum = rnd.Next(0, nums.Count);
                                     tempnum = nums[randnum];
-                                    nums.RemoveAt(randnum);
+                                    //nums.RemoveAt(randnum);
                                 }
                             }
                             rows++;
@@ -106,11 +114,6 @@ namespace scratch
                         if (failure == true)
                             break;
 
-                        //int cells = 0;
-                        //for (int w = 0; w < 9; w++)
-                        //{
-                            //x = 5;
-                            //y = 3;
                         xcell = (x / 3) * 3;
                         ycell = (y / 3) * 3;
 
@@ -118,28 +121,36 @@ namespace scratch
                         {
                             for (int l = 0; l < 3; l++)
                             {
+                                //cellchecker = false;
                                 //if (xcell == x && ycell == y)
-                                //  continue;
+                                //  failure = false;
+                                //goto skip;
                                 if (arrays[xcell, ycell] == tempnum)
                                 {
                                     failure = true;
                                     break;
                                 }
+                                //skip:
+                                if (failure == true)
+                                {
+                                    break;
+                                }
                                 ycell++;
                             }
 
-                            xcell++;
-                            ycell = ycell - 3;
-                        }                         
-                        //}
+                            xcell ++;
+                            ycell -= 3;
+                        }                     
                         if (failure == true)
                             break;
 
                         if (rowschecker == false && colschecker == false && cellchecker == false)
                         {
                             arrays[x, y] = tempnum;
+                            nums.RemoveAt(randnum);
                             limit--;
                             //Console.Write(arrays[x, y] + " ");
+                            //Console.ReadKey();
                         }
 
                     }
