@@ -11,8 +11,8 @@ namespace scratch
     {
         static void Main(string[] args)
         {
-            List<int> nums = new List<int>();
-            int[,] arrays = new int[9, 9];
+            List<int> godnums = new List<int>();
+            int[,] sacredarrays = new int[9, 9];
             Random rnd = new Random();
             int tempnum = 0;
             int randnum = 0;
@@ -24,61 +24,74 @@ namespace scratch
             int yplace = -1;
             int xcell = 0;
             int ycell = 0;
+            int newnumloop = 100;
 
             bool failure = false;
             bool success = false;
+            bool newnum = false;
             bool colschecker = false;
             bool rowschecker = false;
             bool cellchecker = false;
 
             while (success == false)
             {
-                arrays = new int[9, 9];
+                sacredarrays = new int[9, 9];
                 xcell = 0;
                 ycell = 0;
                 xplace = -1;
                 yplace = -1;
                 limit = 81;
+                failure = false; // SO IT WAS YOU WHO WAS THE PROBLEM, YOU FUCKING BOOL!!!!!!!
+
                 for (int x = 0; x < 9; x++)
                 {
-                    nums.Clear();
+                    godnums.Clear();
                     for (int m = 1; m < 10; m++)
-                        nums.Add(m);
+                        godnums.Add(m);
 
                     xplace++;
                     if (xplace > 0)
                         yplace = -1;
-                    //if (yplace > 9)
-                    //    yplace = -1;
+
 
                     for (int y = 0; y < 9; y++)
-                    {
-                        randnum = rnd.Next(0, nums.Count);
-                        tempnum = nums[randnum];
-                        //nums.RemoveAt(randnum);
-
+                    {                       
+                        newnumloop = 100;
+                        newnum = false;
+                        randnum = rnd.Next(0, godnums.Count);
+                        tempnum = godnums[randnum];
                         yplace++;
+                    newnum:
+                        if(newnum == true)
+                        {
+                            randnum = rnd.Next(0, godnums.Count);
+                            tempnum = godnums[randnum];
+                            newnumloop --;
+                        }
                         cols = 0;
 
                         for (int q = 0; q < 9; q++)
                         {
                             colschecker = false;
-                            //if (cols == y)
-                            //    failure = false;
-                            if (arrays[xplace, cols] == tempnum)
+                            if (sacredarrays[xplace, cols] == tempnum)
                                 colschecker = true;
                             if (colschecker == true)
                             {
-                                if (nums.Count == 0)
+
+                                if (godnums.Count == 0)
+                                {
+                                    failure = true;
+                                    break;
+                                }
+                                if (newnumloop == 0)
                                 {
                                     failure = true;
                                     break;
                                 }
                                 else
                                 {
-                                    randnum = rnd.Next(0, nums.Count);
-                                    tempnum = nums[randnum];
-                                    //nums.RemoveAt(randnum);
+                                    newnum = true;
+                                    goto newnum;
                                 }
                             }
                             cols++;
@@ -91,22 +104,24 @@ namespace scratch
                         {
 
                             rowschecker = false;
-                            //if (rows == x)
-                            //    failure = false;
-                            if (arrays[rows, yplace] == tempnum)
+                            if (sacredarrays[rows, yplace] == tempnum)
                                 rowschecker = true;
                             if (rowschecker == true)
                             {
-                                if (nums.Count == 0)
+                                if (godnums.Count == 0)
+                                {
+                                    failure = true;
+                                    break;
+                                }
+                                if (newnumloop == 0)
                                 {
                                     failure = true;
                                     break;
                                 }
                                 else
                                 {
-                                    randnum = rnd.Next(0, nums.Count);
-                                    tempnum = nums[randnum];
-                                    //nums.RemoveAt(randnum);
+                                    newnum = true;
+                                    goto newnum;
                                 }
                             }
                             rows++;
@@ -121,22 +136,31 @@ namespace scratch
                         {
                             for (int l = 0; l < 3; l++)
                             {
-                                //cellchecker = false;
-                                //if (xcell == x && ycell == y)
-                                //  failure = false;
-                                //goto skip;
-                                if (arrays[xcell, ycell] == tempnum)
+                                cellchecker = false;
+                                if (sacredarrays[xcell, ycell] == tempnum)
+                                    cellchecker = true;
+                                if (cellchecker == true)
                                 {
-                                    failure = true;
-                                    break;
-                                }
-                                //skip:
-                                if (failure == true)
-                                {
-                                    break;
-                                }
+                                    if (godnums.Count == 0)
+                                    {
+                                        failure = true;
+                                        break;
+                                    }
+                                    if (newnumloop == 0)
+                                    {
+                                        failure = true;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        newnum = true;
+                                        goto newnum;
+                                    }
+                                }                                
                                 ycell++;
                             }
+                            if (failure == true)
+                                break;
 
                             xcell ++;
                             ycell -= 3;
@@ -146,11 +170,9 @@ namespace scratch
 
                         if (rowschecker == false && colschecker == false && cellchecker == false)
                         {
-                            arrays[x, y] = tempnum;
-                            nums.RemoveAt(randnum);
+                            sacredarrays[x, y] = tempnum;
+                            godnums.RemoveAt(randnum);
                             limit--;
-                            //Console.Write(arrays[x, y] + " ");
-                            //Console.ReadKey();
                         }
 
                     }
@@ -167,13 +189,14 @@ namespace scratch
                     attempts++;
                     Console.WriteLine("attempt " + attempts);
                 }
+
             }           
 
-            for (int xx = 0; xx < arrays.GetLength(0); xx++)
+            for (int xx = 0; xx < sacredarrays.GetLength(0); xx++)
             {
-                for (int yy = 0; yy < arrays.GetLength(1); yy++)
+                for (int yy = 0; yy < sacredarrays.GetLength(1); yy++)
                 {
-                    Console.Write(arrays[xx, yy] + "       ");
+                    Console.Write(sacredarrays[xx, yy] + "       ");
                 }
                 Console.WriteLine();
                 Console.WriteLine();
@@ -183,3 +206,6 @@ namespace scratch
         }
     }
 }
+
+//why only showing zero?!?!
+// IT WAS THE FUCKIGN BOOL
