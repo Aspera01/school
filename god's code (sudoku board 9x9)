@@ -7,139 +7,123 @@ using System.Threading.Tasks;
 
 namespace scratch
 {
+
+    /// <summary>
+    /// new logic lets go (03/22)
+    /// i dont think this new way works (0/24
+    /// an infinite loop problem p1 (03/25)
+    /// Infinite loop problem p2 (03/26)
+    /// why only showing zero?!?!
+    /// IT WAS THE FUCKIGN BOOL
+    /// it works! ezpz
+    /// </summary>
     internal class Program
     {
         static void Main(string[] args)
         {
-            List<int> godnums = new List<int>();
-            int[,] sacredarrays = new int[9, 9];
-            Random rnd = new Random();
-            int tempnum = 0;
-            int randnum = 0;
-            int cols = 0;
-            int rows = 0;
-            int limit = 81;
-            int attempts = 0;
-            int xplace = -1;
-            int yplace = -1;
-            int xcell = 0;
-            int ycell = 0;
-            int newnumloop = 100;
+            int go = 0;
+            int high = 0;
+            int low = 9999;
+            int total = 0;
+            while (go > -1)
+            { 
 
-            bool failure = false;
-            bool success = false;
-            bool newnum = false;
-            bool colschecker = false;
-            bool rowschecker = false;
-            bool cellchecker = false;
+                List<int> godnums = new List<int>();
+                int[,] sacredarrays = new int[9, 9];
+                Random rnd = new Random();
+                int tempnum = 0;
+                int randnum = 0;
+                int cols = 0;
+                int rows = 0;
+                int limit = 81;
+                int attempts = 0;
+                int xplace = -1;
+                int yplace = -1;
+                int xcell = 0;
+                int ycell = 0;
+                int newnumloop = 100;
 
-            while (success == false)
-            {
-                sacredarrays = new int[9, 9];
-                xcell = 0;
-                ycell = 0;
-                xplace = -1;
-                yplace = -1;
-                limit = 81;
-                failure = false; // SO IT WAS YOU WHO WAS THE PROBLEM, YOU FUCKING BOOL!!!!!!!
+                bool failure = false;
+                bool success = false;
+                bool newnum = false;
+                bool colschecker = false;
+                bool rowschecker = false;
+                bool cellchecker = false;
 
-                for (int x = 0; x < 9; x++)
+                while (success == false)
                 {
-                    godnums.Clear();
-                    for (int m = 1; m < 10; m++)
-                        godnums.Add(m);
+                    sacredarrays = new int[9, 9];
+                    xcell = 0;
+                    ycell = 0;
+                    xplace = -1;
+                    yplace = -1;
+                    limit = 81;
+                    failure = false; //the problem
 
-                    xplace++;
-                    if (xplace > 0)
-                        yplace = -1;
+                    for (int x = 0; x < 9; x++)
+                    {
+                        godnums.Clear();
+                        for (int m = 1; m < 10; m++)
+                            godnums.Add(m);
+
+                        xplace++;
+                        if (xplace > 0)
+                            yplace = -1;
 
 
-                    for (int y = 0; y < 9; y++)
-                    {                       
-                        newnumloop = 100;
-                        newnum = false;
-                        randnum = rnd.Next(0, godnums.Count);
-                        tempnum = godnums[randnum];
-                        yplace++;
-                    newnum:
-                        if(newnum == true)
+                        for (int y = 0; y < 9; y++)
                         {
+                            newnumloop = 100;
+                            newnum = false;
                             randnum = rnd.Next(0, godnums.Count);
                             tempnum = godnums[randnum];
-                            newnumloop --;
-                        }
-                        cols = 0;
-
-                        for (int q = 0; q < 9; q++)
-                        {
-                            colschecker = false;
-                            if (sacredarrays[xplace, cols] == tempnum)
-                                colschecker = true;
-                            if (colschecker == true)
+                            yplace++;
+                        newnum:
+                            if (newnum == true)
                             {
-
-                                if (godnums.Count == 0)
-                                {
-                                    failure = true;
-                                    break;
-                                }
-                                if (newnumloop == 0)
-                                {
-                                    failure = true;
-                                    break;
-                                }
-                                else
-                                {
-                                    newnum = true;
-                                    goto newnum;
-                                }
+                                randnum = rnd.Next(0, godnums.Count);
+                                tempnum = godnums[randnum];
+                                newnumloop--;
                             }
-                            cols++;
-                        }
-                        if (failure == true)
-                            break;
+                            cols = 0;
 
-                        rows = 0;
-                        for (int p = 0; p < 9; p++)
-                        {
-
-                            rowschecker = false;
-                            if (sacredarrays[rows, yplace] == tempnum)
-                                rowschecker = true;
-                            if (rowschecker == true)
+                            for (int q = 0; q < 9; q++)
                             {
-                                if (godnums.Count == 0)
+                                colschecker = false;
+                                if (sacredarrays[xplace, cols] == tempnum)
+                                    colschecker = true;
+                                if (colschecker == true)
                                 {
-                                    failure = true;
-                                    break;
+
+                                    if (godnums.Count == 0)
+                                    {
+                                        failure = true;
+                                        break;
+                                    }
+                                    if (newnumloop == 0)
+                                    {
+                                        failure = true;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        newnum = true;
+                                        goto newnum;
+                                    }
                                 }
-                                if (newnumloop == 0)
-                                {
-                                    failure = true;
-                                    break;
-                                }
-                                else
-                                {
-                                    newnum = true;
-                                    goto newnum;
-                                }
+                                cols++;
                             }
-                            rows++;
-                        }
-                        if (failure == true)
-                            break;
+                            if (failure == true)
+                                break;
 
-                        xcell = (x / 3) * 3;
-                        ycell = (y / 3) * 3;
-
-                        for (int k = 0; k < 3; k++)
-                        {
-                            for (int l = 0; l < 3; l++)
+                            rows = 0;
+                            for (int p = 0; p < 9; p++)
                             {
-                                cellchecker = false;
-                                if (sacredarrays[xcell, ycell] == tempnum)
-                                    cellchecker = true;
-                                if (cellchecker == true)
+
+                                rowschecker = false;
+                                if (sacredarrays[rows, yplace] == tempnum)
+                                    rowschecker = true;
+                                if (rowschecker == true)
                                 {
                                     if (godnums.Count == 0)
                                     {
@@ -156,56 +140,95 @@ namespace scratch
                                         newnum = true;
                                         goto newnum;
                                     }
-                                }                                
-                                ycell++;
+                                }
+                                rows++;
                             }
                             if (failure == true)
                                 break;
 
-                            xcell ++;
-                            ycell -= 3;
-                        }                     
+                            xcell = (x / 3) * 3;
+                            ycell = (y / 3) * 3;
+
+                            for (int k = 0; k < 3; k++)
+                            {
+                                for (int l = 0; l < 3; l++)
+                                {
+                                    cellchecker = false;
+                                    if (sacredarrays[xcell, ycell] == tempnum)
+                                        cellchecker = true;
+                                    if (cellchecker == true)
+                                    {
+                                        if (godnums.Count == 0)
+                                        {
+                                            failure = true;
+                                            break;
+                                        }
+                                        if (newnumloop == 0)
+                                        {
+                                            failure = true;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            newnum = true;
+                                            goto newnum;
+                                        }
+                                    }
+                                    ycell++;
+                                }
+                                if (failure == true)
+                                    break;
+
+                                xcell++;
+                                ycell -= 3;
+                            }
+                            if (failure == true)
+                                break;
+
+                            if (rowschecker == false && colschecker == false && cellchecker == false)
+                            {
+                                sacredarrays[x, y] = tempnum;
+                                godnums.RemoveAt(randnum);
+                                limit--;
+                            }
+
+                        }
                         if (failure == true)
                             break;
 
-                        if (rowschecker == false && colschecker == false && cellchecker == false)
-                        {
-                            sacredarrays[x, y] = tempnum;
-                            godnums.RemoveAt(randnum);
-                            limit--;
-                        }
-
                     }
-                    if (failure == true)
-                        break;
+                    if (limit == 0)
+                    {
+                        success = true;
+                    }
+                    else
+                    {
+                        attempts++;                       
+                    }
 
                 }
-                if (limit == 0)
-                {
-                    success = true;
-                }
-                else
-                {
-                    attempts++;
-                    Console.WriteLine("attempt " + attempts);
-                }
 
-            }           
-
-            for (int xx = 0; xx < sacredarrays.GetLength(0); xx++)
-            {
-                for (int yy = 0; yy < sacredarrays.GetLength(1); yy++)
+                for (int xx = 0; xx < sacredarrays.GetLength(0); xx++)
                 {
-                    Console.Write(sacredarrays[xx, yy] + "       ");
+                    for (int yy = 0; yy < sacredarrays.GetLength(1); yy++)
+                    {
+                        Console.Write(sacredarrays[xx, yy] + "       ");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
-                Console.WriteLine();
+                Console.WriteLine("In only " + attempts + " attempts!!");
+                go++;
+                total = total + attempts;
+                int average = total / go;
+                if (attempts < low)
+                    low = attempts;
+                if (attempts > high)
+                    high = attempts;
+                Console.WriteLine("Average attempts: " + average + " | " + "Highest attempts: " + high + " | " + "Lowest attempts: " + low + " | " + "Boards generated: " + go + " | ");
+                Console.ReadKey();
             }
-            Console.ReadKey();
 
         }
     }
 }
-
-//why only showing zero?!?!
-// IT WAS THE FUCKIGN BOOL
