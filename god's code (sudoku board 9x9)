@@ -58,7 +58,7 @@ namespace scratch
                     xplace = -1;
                     yplace = -1;
                     limit = 81;
-                    failure = false; //the problem
+                    failure = false;
 
                     for (int x = 0; x < 9; x++)
                     {
@@ -94,12 +94,6 @@ namespace scratch
                                     colschecker = true;
                                 if (colschecker == true)
                                 {
-
-                                    if (godnums.Count == 0)
-                                    {
-                                        failure = true;
-                                        break;
-                                    }
                                     if (newnumloop == 0)
                                     {
                                         failure = true;
@@ -125,11 +119,6 @@ namespace scratch
                                     rowschecker = true;
                                 if (rowschecker == true)
                                 {
-                                    if (godnums.Count == 0)
-                                    {
-                                        failure = true;
-                                        break;
-                                    }
                                     if (newnumloop == 0)
                                     {
                                         failure = true;
@@ -158,11 +147,6 @@ namespace scratch
                                         cellchecker = true;
                                     if (cellchecker == true)
                                     {
-                                        if (godnums.Count == 0)
-                                        {
-                                            failure = true;
-                                            break;
-                                        }
                                         if (newnumloop == 0)
                                         {
                                             failure = true;
