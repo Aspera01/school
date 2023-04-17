@@ -1,0 +1,68 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Practice_problem__bingo_card_duplication_glitch_
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string inputFilePath = "C:\\duplication glitch\\choice.txt";
+            //string outputFileName = "bingocard.";
+            int[,] bingoCard = new int[5, 5];
+            List<int> list = new List<int>();
+            List<string> lines = new List<string>();
+            Random rnd = new Random();
+            int temp = 0;
+            int idiot = 0;
+            bool append = true;
+
+            string line = "";
+            using (StreamReader sr = new StreamReader(inputFilePath))
+            {
+                line = sr.ReadLine();                   
+            }
+
+            for(int x = 0; x < int.Parse(line); x++)
+            {
+                idiot++;
+
+                using (StreamWriter sw = new StreamWriter("Bingocard" + idiot + ".txt "))
+                {
+                    // generating the numbers
+                    for (int c = 0; c < bingoCard.GetLength(1); c++)
+                    {
+                        list.Clear();
+                        for (int nums = 1; nums < 16; nums++)
+                            list.Add(nums);
+
+                        for (int r = 0; r < bingoCard.GetLength(0); r++)
+                        {
+                            temp = rnd.Next(0, list.Count);
+                            bingoCard[r, c] = list[temp];
+                            list.RemoveAt(temp);
+                        }
+                    }
+                    // display
+                    for (int r = 0; r < bingoCard.GetLength(0); r++)
+                    {
+                        for (int c = 0; c < bingoCard.GetLength(1); c++)
+                        {
+                            bingoCard[r, c] += (15 * c);
+                            sw.Write(bingoCard[r, c] + "\t");
+                        }
+                        sw.WriteLine();
+                    }
+
+                }
+            }
+
+            Console.WriteLine("Done");
+            Console.ReadKey();
+        }
+    }
+}
