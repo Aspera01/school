@@ -1,14 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace its_time
+namespace Practice_Problem__Address_book_with_files_
 {
     internal class Program
     {
@@ -16,34 +13,27 @@ namespace its_time
         {
             Dictionary<string, string> entry = new Dictionary<string, string>();
             int choice = 0;
-            int choice2 = 0;
+            //int choice2 = 0;
             int record = 0;
-            int x = 0;
-            string next = "";
+            //int x = 0;
+            //string next = "";
             string dox = "";
             string name = "";
             string address = "";
             string contact = "";
             string line = "";
             bool dics = false;
-            bool display = false;
+            //bool display = false;
             bool reality = false;
-
-            
-            using (StreamReader sr = new StreamReader("DA SACRED ARCHIVES.txt"))
-            {
-                line = sr.ReadLine();
-            }
-            //if (line == "")
 
             while (!reality)
             {
+
                 reality = false;
                 while (!dics)
                 {
                     dics = false;
                     choice = 0;
-                    choice2 = 0;
 
                     Console.WriteLine("There are currently " + entry.Count + " entry/entries in this book. \n");
                     Console.WriteLine("OPTIONS: \n" + "[1] Display entries \n" + "[2] Add a new entry \n" + "[3] Quit program");
@@ -61,66 +51,20 @@ namespace its_time
                             break;
                         }
 
-                        Console.WriteLine("OPTIONS: \n" + "[1] Display all entries \n" + "[2] error \n");
-                        choice2 = int.Parse(Console.ReadLine());
-                        Console.Clear();
-
-                        if (choice2 == 1)
+                        using (StreamWriter sw = new StreamWriter("DA SACRED ARCHIVES.txt"))
                         {
-                            using (StreamWriter sw = new StreamWriter("DA SACRED ARCHIVES.txt"))
+                            record = 0;
+                            sw.WriteLine("There are currently " + entry.Count + " entry/entries in this book. \n");
+                            foreach (KeyValuePair<string, string> entries in entry)
                             {
-                                record = 0;
-                                foreach (KeyValuePair<string, string> entries in entry)
-                                {
-                                    record++;
-                                    sw.Write(record + ". ");
-                                    sw.Write(entries.Key + " - ");
-                                    sw.Write(entries.Value + " | ");
-                                    sw.WriteLine("\n");
-                                }
-                                //sw.WriteLine("==============================");
-                                //Console.WriteLine("All entries now shown!");
-                                Console.WriteLine("File updated!");
-                                //sw.ReadKey();
-                                //sw.Clear();
+                                record++;                                   
+                                sw.Write(record + ". ");
+                                sw.Write(entries.Key + " - ");
+                                sw.Write(entries.Value + " | ");
+                                sw.WriteLine("\n");
                             }
-                        }
-                        if (choice2 == 2)
-                        {
-                            Console.WriteLine("error place holder xxxxxxxxxxxxxx");
-                        //    while (!display)
-                        //    {
-                        //        Console.WriteLine("Press the 'n' key to show next entry");
-                        //        record = 0;
-                        //        foreach (KeyValuePair<string, string> entries in entry)
-                        //        {
-                        //            next = Console.ReadLine();
+                            Console.WriteLine("File updated!");
 
-                        //            if (next == "n" || next == "N")
-                        //            {
-                        //                record++;
-                        //                Console.Write(record + ". ");
-                        //                Console.Write(entries.Key + " - ");
-                        //                Console.Write(entries.Value + " | ");
-                        //                Console.WriteLine("\n");
-                        //            }
-                        //            else
-                        //            {
-                        //                Console.WriteLine("Wrong key! Try again");
-                        //                Console.ReadKey();
-                        //                Console.Clear();
-                        //            }
-                        //            if (record == entry.Count)
-                        //            {
-                        //                display = true;
-                        //                break;
-                        //            }
-                        //        }
-                        //    }
-                        //    Console.WriteLine("==============================");
-                        //    Console.WriteLine("All entries now shown!");
-                        //    Console.ReadKey();
-                        //    Console.Clear();
                         }
 
                     }
