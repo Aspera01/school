@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Practice_Problem__Word_Count_
+namespace dio_è_morto
 {
     internal class Program
     {
@@ -15,7 +15,7 @@ namespace Practice_Problem__Word_Count_
             //string phrase = "The The The the the quick brown fox jumped over the lazy dog again, and again.";
             //string phrase = "";
             List<string> phrase = new List<string>();
-            //string[] phrase = new string[20];
+            string[] words = new string[] { };
             string line = "";
             //string[] words ;
             //string[] neowords ;
@@ -32,17 +32,23 @@ namespace Practice_Problem__Word_Count_
             {
                 while ((line = sr.ReadLine()) != null)
                 {
-                    phrase.Add(line); 
+                    words = line.Split(' ');
+
+                    for (int xx = 0; xx < words.Length; xx++)
+                    {
+                        phrase.Add(words[xx]);
+                    }
                 }
             }
-            while (!reality)
-            {
-                done = false;
-                x = -1;
-                string[] words = phrase[j].Split(' ');
-                string[] neowords = phrase[j].Split(' ');
+            Console.ReadKey();
+            //while (!reality)
+            //{
+            //    done = false;
+            //    x = -1;
+            //    string[] words = phrase[0].Split(' ');
+                string[] neowords = phrase[0].Split(' ');
 
-                while (done == false)
+            while (done == false)
                 {
                     x++;
                     dupe = true;
@@ -94,10 +100,12 @@ namespace Practice_Problem__Word_Count_
                     {
                         done = true;
                     }
-                    Console.WriteLine("new");
+
                 }
-                j = j + 2;
-            }
+            //    Console.WriteLine("next na");
+            //    Console.ReadKey();
+            //    j = j + 2;
+            //}
 
             Console.WriteLine("\nowari da...\n");
             Console.WriteLine(x + " words");
