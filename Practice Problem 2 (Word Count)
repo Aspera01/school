@@ -1,85 +1,111 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dio_è_morto
+namespace Practice_Problem__Word_Count_
 {
     internal class Program
     {
         static void Main(string[] args)
         {
             Dictionary<string, int> odin = new Dictionary<string, int>();
-            string phrase = "The The The the the quick brown fox jumped over the lazy dog again, and again.";
-            string[] words = phrase.Split(' ');
-            string[] neowords = phrase.Split(' ');
+            //string phrase = "The The The the the quick brown fox jumped over the lazy dog again, and again.";
+            //string phrase = "";
+            List<string> phrase = new List<string>();
+            //string[] phrase = new string[20];
+            string line = "";
+            //string[] words ;
+            //string[] neowords ;
             int repeat = 0;
-            //int word1 = 0;
             int x = -1;
+            int j = 0;
             int y = 0;
-            string search = "";
             bool done = false;
+            bool reality = false;
             bool dupe = true;
             bool dio = true;
-            //string Text = "yo mama";
 
-            Console.WriteLine(words.Length);
-
-            while (done == false)
+            using (StreamReader sr = new StreamReader("Odin.txt"))
             {
-                dupe = true;
-                dio = true;
-                x++;
-                repeat = 0;
-                for (int i = 0; i < words.Length; i++)
+                while ((line = sr.ReadLine()) != null)
                 {
-                    if(x > 0 && x < 16)
-                    {
-                        y = x;
-                        while (dio)
-                        {
-                            y--;
-                            if (words[x] == neowords[y])
-                            {
-                                dupe = false;
-                                dio = false;
-                                break;
-                            }
-                            if (y == 0)
-                            {
-                                break;
-                            }
-                        }
-                        if (words[x] == neowords[y])
-                        {
-                            break;
-                        }
-                    }
-                    if (x > -1 && x < 16)
-                    {
-                        if (words[x] == neowords[i])
-                        {
-                            repeat++;
-                        }
-                    }
-                   
-                }
-                if (dupe == true)
-                {
-                    odin.Add(words[x], repeat);
-                }
-
-                //Console.WriteLine(words[x] + ": " + repeat);
-                //Console.ReadKey();
-                if (x == words.Length)
-                {
-                    done = true;
+                    phrase.Add(line); 
                 }
             }
+            while (!reality)
+            {
+                done = false;
+                x = -1;
+                string[] words = phrase[j].Split(' ');
+                string[] neowords = phrase[j].Split(' ');
 
-            Console.WriteLine("");
-            Console.WriteLine("owari da...");
+                while (done == false)
+                {
+                    x++;
+                    dupe = true;
+                    dio = true;
+                    repeat = 0;
+                    for (int i = 0; i < words.Length; i++)
+                    {
+                        if (x > 0 && x < words.Length)
+                        {
+                            y = x;
+                            while (dio)
+                            {
+                                y--;
+                                if (words[x] == neowords[y])
+                                {
+                                    dupe = false;
+                                    dio = false;
+                                    break;
+                                }
+                                if (y == 0)
+                                {
+                                    break;
+                                }
+                            }
+                            if (words[x] == neowords[y])
+                            {
+                                break;
+                            }
+                        }
+                        if (x > -1 && x < words.Length)
+                        {
+                            if (words[x] == neowords[i])
+                            {
+                                repeat++;
+                            }
+                        }
+
+                    }
+                    if (dupe == true)
+                    {
+                        if (x < words.Length)
+                        {
+                            //odin is a bitch fr fr
+                            odin.Add(words[x], repeat);
+                        }
+                    }
+
+                    if (x == words.Length)
+                    {
+                        done = true;
+                    }
+                    Console.WriteLine("new");
+                }
+                j = j + 2;
+            }
+
+            Console.WriteLine("\nowari da...\n");
+            Console.WriteLine(x + " words");
+
+            foreach (KeyValuePair<string, int> odins in odin)
+            {
+                Console.WriteLine("{0} - {1}", odins.Key, odins.Value);
+            }
             Console.ReadKey();
 
         }
