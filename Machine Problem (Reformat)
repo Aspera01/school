@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace sed_deus_est_vivens
+{
+    internal class Program
+    {
+
+        static void Main(string[] args)
+        {
+            string test = "";
+            string line = "";
+            string line2 = "";
+            string[] letters = new string[] { };
+            string[] inst = new string[] { };
+            Dictionary<string, int> setup = new Dictionary<string, int>();
+
+            using (StreamReader sr = new StreamReader("Setup.ini"))
+            {
+                while((line = sr.ReadLine()) != null)
+                {
+                    inst = line.Split('=');             
+                }
+            }
+            Console.ReadKey();
+
+            using (StreamReader sr = new StreamReader("Odin.txt"))
+            {
+                while ((line = sr.ReadLine()) != null)
+                {
+                    letters = line.Split(' ');
+
+                    for (int xx = 0; xx < letters.Length; xx++)
+                    {
+                        //phrase.Add(letters[xx]);
+                    }
+                }
+            }
+        }
+    }
+}
