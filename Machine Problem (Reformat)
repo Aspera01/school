@@ -1,44 +1,75 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace sed_deus_est_vivens
+namespace MAchine_PRoblem__Reformat_
 {
     internal class Program
     {
 
         static void Main(string[] args)
         {
-            string test = "";
+            //List<string> whatdo = new List<string>();
+            Dictionary<string, string> setup = new Dictionary<string, string>();            
+            string[] inst = new string[] { };           
             string line = "";
-            string line2 = "";
-            string[] letters = new string[] { };
-            string[] inst = new string[] { };
-            Dictionary<string, int> setup = new Dictionary<string, int>();
+
+            int CharPerLine = 0;
+            int Indent = 0;
+            string InFile = "";
+            string OuTFile = "";
 
             using (StreamReader sr = new StreamReader("Setup.ini"))
             {
-                while((line = sr.ReadLine()) != null)
-                {
-                    inst = line.Split('=');             
-                }
-            }
-            Console.ReadKey();
-
-            using (StreamReader sr = new StreamReader("Odin.txt"))
-            {
+                int w = 0;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    letters = line.Split(' ');
-
-                    for (int xx = 0; xx < letters.Length; xx++)
+                    w = 1;
+                    inst = line.Split('=');
+                    for (int x = 0; x < 1; x++)
                     {
-                        //phrase.Add(letters[xx]);
+                        setup.Add(inst[x], inst[w]);
                     }
                 }
+            }
+            //int lol = 0;
+            for (int y = 0; y < setup.Count; y++)
+            {
+                if (setup.ElementAt(y).Key == "CharPerLine")
+                    CharPerLine = int.Parse(setup.ElementAt(y).Value);
+                if (setup.ElementAt(y).Key == "Indent")
+                    Indent = int.Parse(setup.ElementAt(y).Value);
+                if (setup.ElementAt(y).Key == "InFile")
+                    InFile = setup.ElementAt(y).Value;
+                if (setup.ElementAt(y).Key == "OuTFile")
+                    OuTFile = setup.ElementAt(y).Value;
+            }
+
+            Console.WriteLine("Config has been set.");
+            Console.ReadKey();
+
+            string[] words = new string[] { };
+            string word = "";
+
+            using (StreamReader sr = new StreamReader(InFile))
+            {
+                int xx = 0;
+                while ((word = sr.ReadLine()) != null)
+                {
+                    //error here
+                    word = sr.ReadLine();
+                    words[xx] = word;
+                    xx++;
+
+                    //for (int xx = 0; xx < words.Length; xx++)
+                    //{
+                    //    words[xx] = word;
+                    //}
+                }
+                Console.ReadKey();
             }
         }
     }
