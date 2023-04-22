@@ -88,12 +88,17 @@ namespace MAchine_PRoblem__Reformat_
                 {
 
                     LetCount = words[0].Length;
-                    LineLength = LineLength + LetCount;
+                    LineLength = LineLength + LetCount;             //100 char per line is complete, now get indents and shit
 
                     if (LineLength < CharPerLine)
                     {
                         OutWords.Add(words[yy]);
                         words.RemoveAt(0);
+                    }
+                    if (LineLength > CharPerLine)
+                    {
+                        OutWords.Add("nextline");
+                        LineLength = 0;
                     }
                 }
             }
