@@ -12,16 +12,14 @@ namespace MAchine_PRoblem__Reformat_
 
         static void Main(string[] args)
         {
-            //List<string> whatdo = new List<string>();
-            Dictionary<string, string> setup = new Dictionary<string, string>();            
-            string[] inst = new string[] { };           
+            //setup reader
+            Dictionary<string, string> setup = new Dictionary<string, string>();
+            string[] inst = new string[] { };
             string line = "";
-
             int CharPerLine = 0;
             int Indent = 0;
             string InFile = "";
             string OuTFile = "";
-
             using (StreamReader sr = new StreamReader("Setup.ini"))
             {
                 int w = 0;
@@ -35,7 +33,7 @@ namespace MAchine_PRoblem__Reformat_
                     }
                 }
             }
-            //int lol = 0;
+
             for (int y = 0; y < setup.Count; y++)
             {
                 if (setup.ElementAt(y).Key == "CharPerLine")
@@ -51,25 +49,53 @@ namespace MAchine_PRoblem__Reformat_
             Console.WriteLine("Config has been set.");
             Console.ReadKey();
 
-            string[] words = new string[] { };
-            string word = "";
+            //txt file reader
+            List<string> words = new List<string>();
+            string[] word = new string[] { };
+            string text = "";
+            int xx = 0;
 
             using (StreamReader sr = new StreamReader(InFile))
             {
-                int xx = 0;
-                while ((word = sr.ReadLine()) != null)
+                while ((text = sr.ReadLine()) != null)
                 {
                     //error here
-                    word = sr.ReadLine();
-                    words[xx] = word;
-                    xx++;
+                    xx = 0;
+                    word = text.Split(' ');
+                    for(xx = 0; xx < word.Length; xx++)
+                    {
+                        words.Add(word[xx]);
+                    }
 
-                    //for (int xx = 0; xx < words.Length; xx++)
-                    //{
-                    //    words[xx] = word;
-                    //}
                 }
-                Console.ReadKey();
+                Console.WriteLine("text has been read");
+                
+            }
+            Console.ReadKey();
+
+            //This section checks the character per line.
+            List<string> OutWords = new List<string> { };
+            int LineLength = 0;
+            int LetCount = 0;
+            string real = "";
+            int yy = 0;
+            bool outer = false;
+            bool inner = false;
+
+            while (outer == false)
+            {
+                while (inner == false)
+                {
+
+                    LetCount = words[0].Length;
+                    LineLength = LineLength + LetCount;
+
+                    if (LineLength < CharPerLine)
+                    {
+                        OutWords.Add(words[yy]);
+                        words.RemoveAt(0);
+                    }
+                }
             }
         }
     }
