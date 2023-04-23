@@ -59,7 +59,6 @@ namespace MAchine_PRoblem__Reformat_
             {
                 while ((text = sr.ReadLine()) != null)
                 {
-                    //error here
                     xx = 0;
                     word = text.Split(' ');
                     for(xx = 0; xx < word.Length; xx++)
@@ -68,7 +67,7 @@ namespace MAchine_PRoblem__Reformat_
                     }
 
                 }
-                Console.WriteLine("text has been read");
+                Console.WriteLine("text file has been read");
                 
             }
             Console.ReadKey();
@@ -78,30 +77,73 @@ namespace MAchine_PRoblem__Reformat_
             int LineLength = 0;
             int LetCount = 0;
             string real = "";
-            int yy = 0;
-            bool outer = false;
-            bool inner = false;
+            bool done = false;
+            //bool inner = false;
 
-            while (outer == false)
+            while (done == false)
             {
-                while (inner == false)
+
+                LetCount = words[0].Length;
+                LineLength = LineLength + LetCount;             //100 char per line is complete
+                if(LetCount == 0)
                 {
-
-                    LetCount = words[0].Length;
-                    LineLength = LineLength + LetCount;             //100 char per line is complete, now get indents and shit
-
-                    if (LineLength < CharPerLine)
-                    {
-                        OutWords.Add(words[yy]);
-                        words.RemoveAt(0);
-                    }
-                    if (LineLength > CharPerLine)
-                    {
-                        OutWords.Add("nextline");
-                        LineLength = 0;
-                    }
+                    OutWords.Add("nextline");
+                    LineLength = 0;
+                }
+                if (LineLength < CharPerLine)
+                {
+                    OutWords.Add(words[0]);
+                    words.RemoveAt(0);
+                }
+                if (LineLength > CharPerLine)
+                {
+                    OutWords.Add("kill");
+                    LineLength = 0;
+                }
+                if(words.Count == 0)
+                {
+                    done = true;
                 }
             }
+            Console.Write("finished");
+            Console.ReadKey();
+            //ez display
+
+            using (StreamWriter sw = new StreamWriter(OuTFile))
+            {
+
+                for (int z = 0; z < 10; z++)
+                {
+                    sw.Write(' ');
+                }
+                while (OutWords.Count > 0)
+                {
+                    if (OutWords[0] == "kill")
+                    {
+                        sw.Write("\n");
+                        OutWords.RemoveAt(0);
+                    }
+                    if (OutWords[0] == "nextline")
+                    {
+                        sw.Write("\n");
+                        sw.Write("\n");
+                        for (int zzz = 0; zzz < 10; zzz++)
+                        {
+                            sw.Write(' ');
+                        }
+                        OutWords.RemoveAt(0);
+                    }
+                    if (OutWords[0] != "kill" || OutWords[0] != "nextline")
+                    {
+                        sw.Write(OutWords[0] + ' ');
+                        OutWords.RemoveAt(0);
+                    }
+
+                }
+            }
+            Console.Write("finish");
+            Console.ReadKey();
+           
         }
     }
 }
