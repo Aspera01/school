@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SI_SENOR_SI_SENOR_SI_SENOR
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //read both text files
+            List<string> orig = new List<string>();
+            using (StreamReader sr = new StreamReader("chupacabra.txt"))
+            {
+                while()
+            }
+            List<string> fake = new List<string>();
+            using (StreamReader sr = new StreamReader("sombrero.txt"))
+            {
+
+            }
+        }
+    }
+}
