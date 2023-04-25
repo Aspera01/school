@@ -4,8 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
-namespace SI_SENOR_SI_SENOR_SI_SENOR
+namespace Similarity_Index
 {
     internal class Program
     {
@@ -14,9 +15,27 @@ namespace SI_SENOR_SI_SENOR_SI_SENOR
             //read both text files
             char[] uno = new char[] { };
             char[] dos = new char[] { };
+            char[] high = new char[] { };
+            char[] low = new char[] { };
+            int x = 0;
+            double points = 0;
+            double SI = 0;
             string line = "";
+            string uInput1 = "";
+            string uInput2 = "";
+            string file1 = "";
+            string file2 = "";
+            bool pollos = false;
 
-            using (StreamReader sr = new StreamReader("chupacabra.txt"))
+            //Console.WriteLine("First file name with file extension here: ");
+            //uInput1 = Console.ReadLine();
+            //Console.WriteLine("\nSecond file name with file extension here: ");
+            //uInput2 = Console.ReadLine();
+
+            uInput1 = "chupacabra.txt";
+            uInput2 = "sombrero.txt";
+            
+            using (StreamReader sr = new StreamReader(uInput1))
             {
                 while ((line = sr.ReadLine()) != null)
                 {
@@ -24,53 +43,50 @@ namespace SI_SENOR_SI_SENOR_SI_SENOR
                 }
             }
             List<string> fake = new List<string>();
-            using (StreamReader sr = new StreamReader("sombrero.txt"))
+            using (StreamReader sr = new StreamReader(uInput2))
             {
                 while ((line = sr.ReadLine()) != null)
                 {
-                    uno = line.ToCharArray();
+                    dos = line.ToCharArray();
                 }
             }
 
             //gets the lower count array
             if (uno.Length > dos.Length)
-            {
-                Console.WriteLine("shut the fuck up");
+            {           
+                high = uno;
+                low = dos;
             }
             else
             {
-                Console.WriteLine("cocks");
+                high = dos;
+                low = uno;
             }
-            Console.ReadKey();
-        }
-    }
-}
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace scratch
-{
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            string bros = "mawkdmawjdnawfjinawfinawfuinawfuinawuinf";
-            //List<char> neoword = new List<char>();
-            char[] characters1 = bros.ToCharArray();
-            char[] characters2 = 
-
-            for(int x = 0; x < characters.Length; x++)
+            //now here comes the fun part
+            x = 0;
+            while (!pollos)
             {
-                //neoword[0] = characters[x];
-                
+                //x = 0;
+                if(x < low.Length)
+                {
+                    if (low[x] == high[x])
+                    {
+                        points++;
+                    }
+                    x++;
+                }
+                else
+                {
+                    pollos = true;
+                }
+
             }
 
+            SI = points / low.Length;
+
+            Console.Clear();
+            Console.Write("Similarity Index is " + SI + " or " + SI*100 + "%");
             Console.ReadKey();
         }
     }
