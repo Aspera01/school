@@ -12,16 +12,36 @@ namespace SI_SENOR_SI_SENOR_SI_SENOR
         static void Main(string[] args)
         {
             //read both text files
-            List<string> orig = new List<string>();
+            char[] uno = new char[] { };
+            char[] dos = new char[] { };
+            string line = "";
+
             using (StreamReader sr = new StreamReader("chupacabra.txt"))
             {
-                while()
+                while ((line = sr.ReadLine()) != null)
+                {
+                    uno = line.ToCharArray();
+                }
             }
             List<string> fake = new List<string>();
             using (StreamReader sr = new StreamReader("sombrero.txt"))
             {
-
+                while ((line = sr.ReadLine()) != null)
+                {
+                    uno = line.ToCharArray();
+                }
             }
+
+            //gets the lower count array
+            if (uno.Length > dos.Length)
+            {
+                Console.WriteLine("shut the fuck up");
+            }
+            else
+            {
+                Console.WriteLine("cocks");
+            }
+            Console.ReadKey();
         }
     }
 }
