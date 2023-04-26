@@ -1,0 +1,192 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Totoong_Makinang_Problema
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<int, List<string>> dSample = new Dictionary<int, List<string>>();
+            List<string> samples = new List<string>();            
+            List<string> things = new List<string>();
+            string[] temp = new string[] { };
+            int choice = 0;
+            int songID = 0;
+            string line = "";
+            string mergeThing = "";          
+
+            //merger
+            using (StreamReader sr = new StreamReader("top10000songs.csv"))
+            {
+                while ((line = sr.ReadLine()) != null)
+                {
+                    samples.Add(line);
+                }
+            }
+
+            foreach (string sample in samples)
+            {
+                temp = sample.Split(',');
+                foreach (string t in temp)
+                //    Console.Write(t + "--");
+                //Console.WriteLine();
+                //Console.WriteLine(temp.Length);
+                songID = int.Parse(temp[0]);
+                things = new List<string>();
+
+                if (temp.Length == 4)
+                {
+                    for (int x = 1; x < temp.Length; x++)
+                    {
+                        things.Add(temp[x]);
+                    }
+                }
+                else
+                {
+                    mergeThing = "";
+                    for (int x = 1; x < temp.Length; x++)
+                    {
+                        if (temp[x][0] == '"')
+                        {
+                            if (mergeThing.Length > 0)
+                            {
+                                things.Add(mergeThing);
+                                mergeThing = "";
+                            }
+                            mergeThing += temp[x];
+                        }
+                        else if (temp[x][0] == ' ')
+                        {
+                            if (mergeThing.Length > 0)
+                            {
+                                mergeThing += ",";
+                            }
+                            mergeThing += temp[x];
+                        }
+                        else if ((int)temp[x][0] >= 48 && (int)temp[x][0] <= 57)
+                        {
+                            if (mergeThing.Length > 0)
+                            {
+                                mergeThing += ",";
+                                mergeThing += temp[x];
+                            }
+                            else
+                                things.Add(temp[x]);
+
+                        }
+                        else
+                        {
+                            if (mergeThing.Length > 0)
+                            {
+                                things.Add(mergeThing);
+                                mergeThing = "";
+                            }
+
+                            things.Add(temp[x]);
+                        }
+
+                        if (temp[x][temp[x].Length - 1] == '"')
+                            if (mergeThing.Length > 0)
+                            {
+                                things.Add(mergeThing);
+                                mergeThing = "";
+                            }
+
+                    }
+                }
+                dSample[songID] = things;
+            }
+            //Console.WriteLine("done");
+
+            //shuffle ur list
+            Console.WriteLine("    Menu");
+            Console.WriteLine("=============\n[1] Shuffle list\n[2] Search by song title\n[3] Search by artist name");
+            choice = int.Parse(Console.ReadLine());
+
+            //shufflezz my man
+            if (choice == 1)
+            {
+
+            }
+
+            Console.ReadKey();
+        }
+    }
+}
+
+
+
+//scratch
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace scratch
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<int, string> test = new Dictionary<int, string>();
+            //int[] random = new int[] { };
+            List<int> random = new List<int> { };
+            List<int> nurandom = new List<int> { };
+            List<int> forks = new List<int> { };
+            Random rand = new Random();
+            int bro = 0;
+            int bigbro = 0;
+            int tempnum = 0;
+
+            test.Add(1, "bruh");
+            test.Add(2, "ayo");
+            test.Add(3, "amogus");
+            test.Add(4, "glock in my rari");
+            test.Add(5, "unironically suck my c");
+            test.Add(6, "bitches");
+            test.Add(7, "come");
+            test.Add(8, "and go");
+            test.Add(9, "suisei");
+            test.Add(10, "cunny");
+            test.Add(11, "seggs");
+
+
+            foreach (KeyValuePair<int, string> kvp in test)
+            {
+                random.Add(kvp.Key);
+            }
+
+            foreach (KeyValuePair<int, string> sam in test)
+            {
+                
+            }
+          
+            for (int m = 0; m < random.Count; m++)
+                nurandom.Add(m);
+
+            bigbro = random.Count;
+                     
+            for (int x = 0; x < bigbro; x++)
+            {
+                bro = rand.Next(0, random.Count);
+                tempnum = nurandom[bro];
+                forks.Add(random[tempnum]);
+                random.RemoveAt(bro);
+            }
+
+
+            bro = 0;
+
+
+
+            Console.ReadLine();
+
+        }
+    }
+}
