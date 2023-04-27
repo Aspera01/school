@@ -13,10 +13,17 @@ namespace Totoong_Makinang_Problema
         {
             Dictionary<int, List<string>> dSample = new Dictionary<int, List<string>>();
             List<string> samples = new List<string>();            
-            List<string> things = new List<string>();
+            List<string> things = new List<string>();           
+            List<int> nurandom = new List<int> { };
+            List<int> random = new List<int> { };
+            List<string> forks = new List<string> { };
             string[] temp = new string[] { };
+            Random rnd = new Random();
+            int bro = 0;
+            int bigbro = 0;
             int choice = 0;
             int songID = 0;
+            int tempnum = 0;
             string line = "";
             string mergeThing = "";          
 
@@ -33,9 +40,6 @@ namespace Totoong_Makinang_Problema
             {
                 temp = sample.Split(',');
                 foreach (string t in temp)
-                //    Console.Write(t + "--");
-                //Console.WriteLine();
-                //Console.WriteLine(temp.Length);
                 songID = int.Parse(temp[0]);
                 things = new List<string>();
 
@@ -101,7 +105,6 @@ namespace Totoong_Makinang_Problema
                 }
                 dSample[songID] = things;
             }
-            //Console.WriteLine("done");
 
             //shuffle ur list
             Console.WriteLine("    Menu");
@@ -111,82 +114,23 @@ namespace Totoong_Makinang_Problema
             //shufflezz my man
             if (choice == 1)
             {
+                for (int m = 0; m < dSample.Count; m++)
+                    nurandom.Add(m);
 
+                bigbro = dSample.Count;
+
+                for (int x = 0; x < bigbro; x++)
+                {
+                    bro = rnd.Next(0, nurandom.Count);
+                    tempnum = nurandom[bro];
+                    Console.WriteLine(tempnum + " | " + dSample[tempnum][0] + " | " + dSample[tempnum][1] + " | " + dSample[tempnum][2]) ;
+                    nurandom.Remove(bro);
+                    //Console.ReadKey();
+                }
             }
+            Console.Write("finished");
 
             Console.ReadKey();
-        }
-    }
-}
-
-
-
-//scratch
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace scratch
-{
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            Dictionary<int, string> test = new Dictionary<int, string>();
-            //int[] random = new int[] { };
-            List<int> random = new List<int> { };
-            List<int> nurandom = new List<int> { };
-            List<int> forks = new List<int> { };
-            Random rand = new Random();
-            int bro = 0;
-            int bigbro = 0;
-            int tempnum = 0;
-
-            test.Add(1, "bruh");
-            test.Add(2, "ayo");
-            test.Add(3, "amogus");
-            test.Add(4, "glock in my rari");
-            test.Add(5, "unironically suck my c");
-            test.Add(6, "bitches");
-            test.Add(7, "come");
-            test.Add(8, "and go");
-            test.Add(9, "suisei");
-            test.Add(10, "cunny");
-            test.Add(11, "seggs");
-
-
-            foreach (KeyValuePair<int, string> kvp in test)
-            {
-                random.Add(kvp.Key);
-            }
-
-            foreach (KeyValuePair<int, string> sam in test)
-            {
-                
-            }
-          
-            for (int m = 0; m < random.Count; m++)
-                nurandom.Add(m);
-
-            bigbro = random.Count;
-                     
-            for (int x = 0; x < bigbro; x++)
-            {
-                bro = rand.Next(0, random.Count);
-                tempnum = nurandom[bro];
-                forks.Add(random[tempnum]);
-                random.RemoveAt(bro);
-            }
-
-
-            bro = 0;
-
-
-
-            Console.ReadLine();
-
         }
     }
 }
