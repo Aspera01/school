@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -129,6 +130,21 @@ namespace Totoong_Makinang_Problema
                 }
             }
             Console.Write("finished");
+            string uInput = "";
+            if (choice == 2)
+            {
+                Console.Clear();
+                Console.WriteLine("Input song name here: ");
+                uInput = Console.ReadLine();
+
+                for (int y = 1; y < dSample.Count; y++)
+                {
+                    if (dSample[y][1] == uInput)
+                    {
+                        Console.WriteLine("Found");
+                    }
+                }
+            }
 
             Console.ReadKey();
         }
