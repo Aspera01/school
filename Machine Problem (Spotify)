@@ -2,19 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Totoong_Makinang_Problema
+namespace Machine_Problem__spotify_
 {
     internal class Program
     {
         static void Main(string[] args)
         {
             Dictionary<int, List<string>> dSample = new Dictionary<int, List<string>>();
-            List<string> samples = new List<string>();            
-            List<string> things = new List<string>();           
+            List<string> samples = new List<string>();
+            List<string> things = new List<string>();
             List<int> nurandom = new List<int> { };
             List<int> random = new List<int> { };
             List<string> forks = new List<string> { };
@@ -25,11 +24,12 @@ namespace Totoong_Makinang_Problema
             int choice = 0;
             int songID = 0;
             int tempnum = 0;
+            string inputfile = "top10000songs.csv";
             string line = "";
-            string mergeThing = "";          
+            string mergeThing = "";
 
             //merger
-            using (StreamReader sr = new StreamReader("top10000songs.csv"))
+            using (StreamReader sr = new StreamReader(inputfile))
             {
                 while ((line = sr.ReadLine()) != null)
                 {
@@ -37,11 +37,12 @@ namespace Totoong_Makinang_Problema
                 }
             }
 
+
             foreach (string sample in samples)
             {
                 temp = sample.Split(',');
                 foreach (string t in temp)
-                songID = int.Parse(temp[0]);
+                    songID = int.Parse(temp[0]);
                 things = new List<string>();
 
                 if (temp.Length == 4)
@@ -107,43 +108,80 @@ namespace Totoong_Makinang_Problema
                 dSample[songID] = things;
             }
 
-            //shuffle ur list
+
             Console.WriteLine("    Menu");
             Console.WriteLine("=============\n[1] Shuffle list\n[2] Search by song title\n[3] Search by artist name");
             choice = int.Parse(Console.ReadLine());
 
             //shufflezz my man
+            Console.Clear();
             if (choice == 1)
             {
+                Console.WriteLine("Shuffling songs, please wait....");
                 for (int m = 0; m < dSample.Count; m++)
                     nurandom.Add(m);
 
                 bigbro = dSample.Count;
 
-                for (int x = 0; x < bigbro; x++)
+                using (StreamWriter sw = new StreamWriter("shuffled." + inputfile))
                 {
-                    bro = rnd.Next(0, nurandom.Count);
-                    tempnum = nurandom[bro];
-                    Console.WriteLine(tempnum + " | " + dSample[tempnum][0] + " | " + dSample[tempnum][1] + " | " + dSample[tempnum][2]) ;
-                    nurandom.Remove(bro);
-                    //Console.ReadKey();
+
+                    for (int x = 0; x < bigbro; x++)
+                    {
+                        bro = rnd.Next(0, nurandom.Count);
+                        tempnum = nurandom[bro];
+                        sw.WriteLine(dSample.ElementAt(tempnum).Key + " | " + dSample.ElementAt(tempnum).Value[0] + " | " + dSample.ElementAt(tempnum).Value[1] + " | " + dSample.ElementAt(tempnum).Value[2]); //dSample.ElementAt(tempnum).Key //dSample[tempnum][0]
+                        nurandom.Remove(bro);
+                    }
                 }
+                Console.WriteLine("Songs Shuffled!");
             }
-            Console.Write("finished");
+
+            //find song thru title
             string uInput = "";
             if (choice == 2)
             {
-                Console.Clear();
                 Console.WriteLine("Input song name here: ");
                 uInput = Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("Getting data....\n");
 
-                for (int y = 1; y < dSample.Count; y++)
+                for (int y = 0; y < dSample.Count; y++)
                 {
-                    if (dSample[y][1] == uInput)
+                    if (dSample.ElementAt(y).Value[1] == uInput)
                     {
-                        Console.WriteLine("Found");
+                        Console.Write("Song place: " + dSample.ElementAt(y).Key + "\nSong Title: " + dSample.ElementAt(y).Value[1] + "\nArtist: " + dSample.ElementAt(y).Value[0] + "\nDate released: " + dSample.ElementAt(y).Value[2]);
+                        Console.Write("\n=============================\n");                        
                     }
                 }
+                Console.WriteLine("Done!");
+
+            }
+
+            //find song thru artist name
+            uInput = "";
+            if (choice == 3)
+            {
+                Console.WriteLine("Input artist name here: ");
+                uInput = Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("Fetching songs, please wait...");
+
+                using (StreamWriter sw = new StreamWriter(uInput + " songs.csv"))
+                {
+                    sw.WriteLine("Songs by " + uInput + "\n");
+
+                    for (int z = 0; z < dSample.Count; z++)
+                    {
+                        if (dSample.ElementAt(z).Value[0] == uInput)
+                        {
+                            //Console.Write("Songs by " + dSample.ElementAt(z).Value[0]);
+                            sw.WriteLine(dSample.ElementAt(z).Value[1]);
+                        }
+                    }
+                }
+                Console.WriteLine("Songs have been compiled!");
+
             }
 
             Console.ReadKey();
