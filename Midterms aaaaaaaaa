@@ -1,0 +1,42 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.ConstrainedExecution;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Ad_Astra_Per_Aspera
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+             //starts, reads, check if the path in the ini file exist... if exist raed, if not make new.
+            Dictionary<string, string> bruh = new Dictionary<string, string>();
+            string masterlist = "MasterList";
+            string bro = "";
+
+            if (File.Exists(masterlist + ".ml"))
+            {
+                using (StreamReader sr = new StreamReader("pathy.ini"))
+                {
+                    while (sr.ReadLine() != null)
+                    {
+                        bro = sr.ReadLine();
+                        Console.WriteLine(bro);
+                        Console.ReadKey();
+                    }
+
+                }
+            }
+            else
+                using (StreamWriter sw = new StreamWriter(masterlist + ".ml"));
+
+
+
+
+        }
+    }
+}
