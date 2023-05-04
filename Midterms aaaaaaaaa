@@ -13,29 +13,51 @@ namespace Ad_Astra_Per_Aspera
     {
         static void Main(string[] args)
         {
-             //starts, reads, check if the path in the ini file exist... if exist raed, if not make new.
-            Dictionary<string, string> bruh = new Dictionary<string, string>();
+            //starts, reads, check if the path in the ini file exist... if exist raed, if not make new.
+            Dictionary<int, List<string>> information = new Dictionary<int, List<string>>();
+            List<string> infos = new List<string>();
             string masterlist = "MasterList";
             string bro = "";
+            string Fname = "";
+            string Lname = "";
+            int choice = 0;
+            bool proceed = false;
 
-            if (File.Exists(masterlist + ".ml"))
+
+            while (!proceed)
             {
-                using (StreamReader sr = new StreamReader("pathy.ini"))
+                if (File.Exists(masterlist + ".ml"))
                 {
-                    while (sr.ReadLine() != null)
-                    {
-                        bro = sr.ReadLine();
-                        Console.WriteLine(bro);
-                        Console.ReadKey();
-                    }
-
+                    proceed = true;
                 }
+                else
+                    using (StreamWriter sw = new StreamWriter(masterlist + ".ml"));
             }
+            Console.WriteLine("There is a file");
+            Console.ReadKey(); Console.Clear();
+
+            //it starts
+            if(information.Count == 0)
+            {
+                Console.Write("You! You're finally awake! \nI need you and your compatriots to go and tell us your records.\n\nThis cartae contains 0 record.");
+                Console.Write("\nWhat to do? \n[1] Add record \n[-] View records - Disabled \n[-] Delete records - Disabled \n[4] Quit\n");
+                choice = int.Parse(Console.ReadLine());
+                Console.ReadKey();
+            }
+
             else
-                using (StreamWriter sw = new StreamWriter(masterlist + ".ml"));
+            {
+                Console.Write("You! You're finally awake! \nI need you and your friends to go and tell us your informations.\n\nThis cartae contains " + information.Count + " records.");
+                Console.Write("\nWhat to do? \n[1] Add record \n[2] View records \n[3] Delete records \n[4] Quit\n");
+                choice = int.Parse(Console.ReadLine());
+                Console.ReadKey();
+            }
 
+            if(choice == 1)
+            {
+                Console.Write("Please Enter the Following... \nThe bearer of this record");
 
-
+            }
 
         }
     }
