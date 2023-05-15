@@ -1,26 +1,28 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ad_Astra_Per_Aspera
+namespace midterms
 {
     internal class Program
     {
         static void Main(string[] args)
         {
             //starts, reads, check if the path in the ini file exist... if exist raed, if not make new.
-            Dictionary<int, List<string>> information = new Dictionary<int, List<string>>();
-            List<string> infos = new List<string>();
+            Dictionary<int, Dictionary<string, string>> information = new Dictionary<int, Dictionary<string, string>>();
+            Dictionary<string, string> record = new Dictionary<string, string>();
+            List<string> og = new List<string> { "Fnames", "Lnames", "Addresses" };
             string masterlist = "MasterList";
-            string bro = "";
+            string uInput = "";
             string Fname = "";
             string Lname = "";
+            string address = "";
+            string pretentious = "";
             int choice = 0;
+            bool obnoxious = false;
             bool proceed = false;
 
 
@@ -31,34 +33,73 @@ namespace Ad_Astra_Per_Aspera
                     proceed = true;
                 }
                 else
-                    using (StreamWriter sw = new StreamWriter(masterlist + ".ml"));
+                    using (StreamWriter sw = new StreamWriter(masterlist + ".ml")) ;
             }
             Console.WriteLine("There is a file");
-            Console.ReadKey(); Console.Clear();
+            Console.ReadKey(); 
+            Console.Clear();
 
             //it starts
-            if(information.Count == 0)
+            if (information.Count == 0)
             {
-                Console.Write("You! You're finally awake! \nI need you and your compatriots to go and tell us your records.\n\nThis cartae contains 0 record.");
-                Console.Write("\nWhat to do? \n[1] Add record \n[-] View records - Disabled \n[-] Delete records - Disabled \n[4] Quit\n");
+                Console.Write("\"You! You're finally awake! I need you and your compatriots to go and tell us your informations.\" \n=================\nThis cartae contains 0 record.");
+                Console.Write("\n=================\n[1] Add record \n[-] View records - Disabled \n[-] Delete records - Disabled \n[4] Quit\n");
                 choice = int.Parse(Console.ReadLine());
-                Console.ReadKey();
             }
 
             else
             {
-                Console.Write("You! You're finally awake! \nI need you and your friends to go and tell us your informations.\n\nThis cartae contains " + information.Count + " records.");
-                Console.Write("\nWhat to do? \n[1] Add record \n[2] View records \n[3] Delete records \n[4] Quit\n");
+                Console.Write("\"You! You're finally awake! I need you and your friends to go and tell us your informations.\" \n\nThis cartae contains " + information.Count + " records.");
+                Console.Write("\n=================\n[1] Add record \n[2] View records \n[3] Delete records \n[4] Quit\n");
                 choice = int.Parse(Console.ReadLine());
-                Console.ReadKey();
             }
 
-            if(choice == 1)
+            int x = 0;
+            if (choice == 1)
             {
-                Console.Write("Please Enter the Following... \nThe bearer of this record");
+                Console.Clear();
+                Console.Write("Please Enter the Following... \n==============================\n\"So, what's your surname?\"\nYou: ");
+                Fname = Console.ReadLine();
+                record[og[x]] = Fname;
+                x++;
 
+                Console.Write("\"and your first name?\"\nYou: ");
+                Lname = Console.ReadLine();
+                record[og[x]] = Lname;
+                x++;
+
+                Console.Write("\"In what part of Her Majesty's kingdom are you\"\nYou: ");
+                address = Console.ReadLine();
+                record[og[x]] = address;
+                x++;
+
+                Console.Write("\"Perhaps you have any attributes or anything to show for?\" Hint:[1] for \"Yes\" [2] for \"No\" \nYou: ");
+                choice = int.Parse(Console.ReadLine());
+                if (choice == 1)
+                {
+                    obnoxious = true;
+                }
+                while (obnoxious)
+                {
+                    Console.Clear();
+                    Console.Write("\"Alright what would you like to show?\"\nYou: ");
+                    pretentious = Console.ReadLine();
+                    Console.Write("\"What about this \"" + pretentious + "\" thing you speak of?\"\nYou: ");
+                    uInput = Console.ReadLine();
+                    record[pretentious] = uInput;
+
+                    Console.Write("\"Any more attributes or anything you want to show?\" Hint:[1] for \"Yes\" [2] for \"No\" \nYou: ");
+                    choice = int.Parse(Console.ReadLine());
+
+                    if (choice == 2)
+                    {
+                        obnoxious = false;
+                    }                    
+
+                }
+                                 
             }
-
+            Console.ReadKey();
         }
     }
 }
