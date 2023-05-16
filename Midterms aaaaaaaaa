@@ -12,94 +12,229 @@ namespace midterms
         static void Main(string[] args)
         {
             //starts, reads, check if the path in the ini file exist... if exist raed, if not make new.
-            Dictionary<int, Dictionary<string, string>> information = new Dictionary<int, Dictionary<string, string>>();
+            //Dictionary<int, Dictionary<string, string>> information = new Dictionary<int, Dictionary<string, string>>();
             Dictionary<string, string> record = new Dictionary<string, string>();
-            List<string> og = new List<string> { "Fnames", "Lnames", "Addresses" };
-            string masterlist = "MasterList";
+            List<string> og = new List<string> { "surname", "first name", "address" };
+            //List<char> test = new List<char>();
             string uInput = "";
             string Fname = "";
-            string Lname = "";
+            string Sname = "";
             string address = "";
             string pretentious = "";
+            string line = "";
+            string holder = "";            
             int choice = 0;
+            int masterlist = 0;
+            bool append = true;
             bool obnoxious = false;
-            bool proceed = false;
+            bool view = true;
+            bool done = false;
 
 
-            while (!proceed)
+            while (!done)
             {
-                if (File.Exists(masterlist + ".ml"))
+                if (File.Exists("MasterList.ml"))
                 {
-                    proceed = true;
+                    if (File.Exists("Directory.ini"))
+                    {
+                        done = true;
+                    }
                 }
                 else
-                    using (StreamWriter sw = new StreamWriter(masterlist + ".ml")) ;
+                    using (StreamWriter sw = new StreamWriter("MasterList.ml")) { }
+                    using (StreamWriter sw = new StreamWriter("Directory.ini"))
+                    {
+                        sw.WriteLine("MasterList.ml");
+                    }
             }
-            Console.WriteLine("There is a file");
-            Console.ReadKey(); 
-            Console.Clear();
 
             //it starts
-            if (information.Count == 0)
+            while (done)
             {
-                Console.Write("\"You! You're finally awake! I need you and your compatriots to go and tell us your informations.\" \n=================\nThis cartae contains 0 record.");
-                Console.Write("\n=================\n[1] Add record \n[-] View records - Disabled \n[-] Delete records - Disabled \n[4] Quit\n");
-                choice = int.Parse(Console.ReadLine());
-            }
+                using (StreamReader sr = new StreamReader("MasterList.ml"))
+                {
+                    masterlist = 0;
+                    while(sr.ReadLine() != null)
+                    {
+                        masterlist++;
+                    }
+                }
 
-            else
-            {
-                Console.Write("\"You! You're finally awake! I need you and your friends to go and tell us your informations.\" \n\nThis cartae contains " + information.Count + " records.");
-                Console.Write("\n=================\n[1] Add record \n[2] View records \n[3] Delete records \n[4] Quit\n");
-                choice = int.Parse(Console.ReadLine());
-            }
+                Console.Clear();                
+                if (masterlist == 0)
+                {
+                    Console.Write("\"You! You're finally awake! I need you and your compatriots to go and tell us your informations.\" \n=================\nThis cartae contains 0 record.");
+                    Console.Write("\n=================\n[1] Add record \n[-] View records - Disabled \n[-] Delete records - Disabled \n[4] Quit\n");
+                    choice = int.Parse(Console.ReadLine());
+                }
 
-            int x = 0;
-            if (choice == 1)
-            {
-                Console.Clear();
-                Console.Write("Please Enter the Following... \n==============================\n\"So, what's your surname?\"\nYou: ");
-                Fname = Console.ReadLine();
-                record[og[x]] = Fname;
-                x++;
+                else
+                {
+                    Console.Write("\"and you! Go on and tell us your information.\" \n=================\nThis cartae contains " + masterlist + " records.");
+                    Console.Write("\n=================\n[1] Add record \n[2] View records \n[3] Delete records \n[4] Quit\n");
+                    choice = int.Parse(Console.ReadLine());
+                }
 
-                Console.Write("\"and your first name?\"\nYou: ");
-                Lname = Console.ReadLine();
-                record[og[x]] = Lname;
-                x++;
-
-                Console.Write("\"In what part of Her Majesty's kingdom are you\"\nYou: ");
-                address = Console.ReadLine();
-                record[og[x]] = address;
-                x++;
-
-                Console.Write("\"Perhaps you have any attributes or anything to show for?\" Hint:[1] for \"Yes\" [2] for \"No\" \nYou: ");
-                choice = int.Parse(Console.ReadLine());
+                int x = 0;
                 if (choice == 1)
                 {
-                    obnoxious = true;
-                }
-                while (obnoxious)
+                    record = new Dictionary<string, string>();
+                    Console.Clear();
+                    Console.Write("Please Enter the Following... \n==============================\n\"So, what's your surname?\"\nYou: ");
+                    Sname = Console.ReadLine();
+                    record[og[x]] = Sname;
+                    char[] letSname = Sname.ToCharArray();
+                    x++;
+
+                    Console.Write("\"and your first name?\"\nYou: ");
+                    Fname = Console.ReadLine();
+                    record[og[x]] = Fname;                    
+                    x++;
+
+                    Console.Write("\"Where do you live?\"\nYou: ");
+                    address = Console.ReadLine();
+                    record[og[x]] = address;
+
+                    Console.Write("\"Perhaps you have any attributes or anything to show?\" Hint:[1] for \"Yes\" [2] for \"No\" \nYou: ");
+                    choice = int.Parse(Console.ReadLine());
+                    if (choice == 1)
+                    {
+                        obnoxious = true;
+                    }
+                    while (obnoxious)
+                    {
+                        Console.Clear();
+                        Console.Write("\"Alright what would you like to show?\"\nYou: ");
+                        pretentious = Console.ReadLine();
+                        Console.Write("\"What about this \"" + pretentious + "\" thing you speak of?\"\nYou: ");
+                        uInput = Console.ReadLine();
+                        record[pretentious] = uInput;
+
+                        Console.Write("\"Any more attributes or anything you want to show off?\" Hint:[1] for \"Yes\" [2] for \"No\" \nYou: ");
+                        choice = int.Parse(Console.ReadLine());
+
+                        if (choice == 2)
+                        {
+                            obnoxious = false;
+                            Console.Clear();
+                        }
+
+                    }
+                    using (StreamWriter sw = new StreamWriter(letSname[0] + "_" + Fname))
+                    {
+                        foreach(KeyValuePair<string,string> kvp in record)
+                        {
+                            sw.WriteLine(kvp.Key + " | " + kvp.Value);
+                        }
+                    }
+                    using (StreamWriter sw = new StreamWriter("MasterList.ml", append))
+                    {
+                        sw.WriteLine(letSname[0] + "_" + Fname);
+                    }
+                    choice = 0;
+                }               
+
+                if (choice == 2)
                 {
                     Console.Clear();
-                    Console.Write("\"Alright what would you like to show?\"\nYou: ");
-                    pretentious = Console.ReadLine();
-                    Console.Write("\"What about this \"" + pretentious + "\" thing you speak of?\"\nYou: ");
-                    uInput = Console.ReadLine();
-                    record[pretentious] = uInput;
-
-                    Console.Write("\"Any more attributes or anything you want to show?\" Hint:[1] for \"Yes\" [2] for \"No\" \nYou: ");
-                    choice = int.Parse(Console.ReadLine());
-
-                    if (choice == 2)
+                    done = false;
+                    view = true;
+                    while (view)
                     {
-                        obnoxious = false;
-                    }                    
+                        using (StreamReader sr = new StreamReader("MasterList.ml"))
+                        {
+                            while (!done)
+                            {
+                                holder = "";
+                                line = sr.ReadLine();
+                                choice = 0;
+                                record = new Dictionary<string, string>();
+                                if (line == null)
+                                    break;
+                                using (StreamReader fr = new StreamReader(line))
+                                {
+                                    while (holder != null)
+                                    {
+                                        holder = fr.ReadLine();
+                                        if (holder != null)
+                                        {
+                                            string[] test = holder.Split('|');
+                                            record.Add(test[0], test[1]);
+                                        }
+                                    }
+                                    Console.WriteLine("\"So it says here...\"");
+                                    foreach (KeyValuePair<string, string> kvp in record)
+                                    {
+                                        Console.WriteLine("{0}: {1}", kvp.Key, kvp.Value);
+                                    }
+                                }
+                                Console.Write("\nPress \"1\" to see next record, press \"2\" to quit: \n");
+                                choice = int.Parse(Console.ReadLine());
+                                                               
 
+                                if (choice == 1)
+                                {
+                                    Console.Clear();                                 
+                                }
+                                if (choice == 2)
+                                {
+                                    view = false;
+                                    done = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
                 }
-                                 
-            }
-            Console.ReadKey();
+                if (choice == 3)
+                {
+                    Console.Clear();
+                    done = false;
+                    using (StreamReader sr = new StreamReader("MasterList.ml"))
+                    {
+                        og = new List<string> { };
+                        int ml = masterlist;
+                        while (ml != 0)
+                        {                            
+                            og.Add(sr.ReadLine());
+                            ml--;
+                        }
+                        og.Sort();
+                        Console.WriteLine("\"You said you want someone removed?\"\n");
+                        foreach(string o in og)
+                        {
+                            ml++;
+                            Console.WriteLine("[" + ml + "]" + o);
+                        }
+                        Console.WriteLine("\n\"Well, make a choice then...\"");
+                        choice = int.Parse(Console.ReadLine());
+                    }
+                    while (!done)
+                    {
+                        Console.Clear();
+                        using (StreamWriter sw = new StreamWriter("MasterList.ml"))
+                        {
+                            choice--;
+                            og.RemoveAt(choice);
+                            foreach( string o in og)
+                            {
+                                sw.WriteLine(o);
+                            }
+                            Console.WriteLine("\"All right, that guy has been removed.\"");
+                            done = true;
+                        }
+                    }                   
+                }
+                if (choice == 4)
+                {
+                    Console.Clear();
+                    Console.WriteLine("\"Alright, have a good day citizen.\"");
+                    Console.WriteLine("\n\nPress any button to exit...");
+                    Console.ReadKey();
+                    done = false;
+                }
+            }            
         }
     }
 }
