@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace sorters
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            List<string> unsorted = new List<string>();
+            List<string> sorted = new List<string>();
+            int z = 0;
+            string words = "";
+            string word1 = "";
+            string word2 = "";
+            int temp1 = 0;
+            int temp2 = 0;
+            bool derrick = false;
+            
+            using(StreamReader sr = new StreamReader("ToSort.txt"))
+            {
+                while((words = sr.ReadLine()) != null)
+                {
+                    unsorted.Add(words.ToUpper());
+                }
+                
+            }
+
+            //sort em brother!!!
+            for (int x = 0; x < unsorted.Count; x++)
+            {
+                for (int y = 0; y < unsorted.Count - 1; y++)
+                {
+                    if ((int)unsorted[x][0] > (int)unsorted[x][0])
+                    {
+                        temp1 = nums[y];
+                        nums[y] = nums[y + 1];
+                        nums[y + 1] = temp;
+
+                    }
+                }
+                Console.WriteLine(word1);
+            }
+            Console.ReadKey();
+
+        }
+    }
+}
