@@ -1,0 +1,100 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace june_15_the_heat_death_of_the_universe
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] ToBeDec = new string[4];
+            int[] finale = new int[4];
+            string uInput = "";
+            bool bro = true;
+            bool pass = true;
+
+            while (bro)
+            {
+                Console.WriteLine("Input a hexadecimal with a length of 4");
+                uInput = Console.ReadLine().ToUpper();
+
+                if (uInput.Length > 4 || uInput.Length < 4)
+                {
+                    Console.WriteLine("I said a \"length of 4\" you dum dum");
+                }
+                if (uInput.Length == 4)
+                {
+                    Console.WriteLine("damn u aint dumb");
+                    pass = false;
+                }
+
+                char[] chars = uInput.ToCharArray();
+
+                int y = 4;
+                for (int x = 0; x < ToBeDec.Length; x++)
+                {
+                    y--;
+                   ToBeDec[x] = chars[y].ToString();
+                }             
+                toNum(ToBeDec);
+
+                for (int x = 0; x < ToBeDec.Length; x++)
+                {
+                    finale[x] = int.Parse(ToBeDec[x]);
+                }
+
+                hexconverter(finale);
+                //Console.WriteLine(uInput + " in decimal is: " + hexconverter(uInput));
+                Console.WriteLine();          
+            }         
+        }
+
+        static int[] hexconverter(int[] conv)
+        {
+            int tempnum = 0;
+            string tempstring = "";
+            for (int x = 0; x < conv.Length; x++)
+            {
+                tempnum = conv[x];
+                conv[x] = (int)Math.Pow(tempnum, 16);
+            }
+
+            return conv;
+        }
+
+        static string[] toNum(string[] ToBeDec)
+        {
+            for(int x = 0; x < ToBeDec.Length; x++)
+            {
+                if (ToBeDec[x] == "A")
+                {
+                    ToBeDec[x] = 10.ToString();
+                }
+                if (ToBeDec[x] == "B")
+                {
+                    ToBeDec[x] = 11.ToString();
+                }
+                if (ToBeDec[x] == "C")
+                {
+                    ToBeDec[x] = 11.ToString();
+                }
+                if (ToBeDec[x] == "D")
+                {
+                    ToBeDec[x] = 11.ToString();
+                }
+                if (ToBeDec[x] == "E")
+                {
+                    ToBeDec[x] = 11.ToString();
+                }
+                if (ToBeDec[x] == "F")
+                {
+                    ToBeDec[x] = 11.ToString();
+                }
+            }
+            return ToBeDec;
+        }
+    }
+}
