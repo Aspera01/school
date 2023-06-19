@@ -1,37 +1,84 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HW
+namespace za_homework
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            List<string> phrase = new List<string>();
             string[] words = new string[] { };
+            List<string> lines = new List<string>();
+            bool gogogo = true;
+            bool proceed = false;
+            Console.WriteLine("Press any key to proceed with word counter.");
+            Console.ReadKey();
+
+            while(gogogo)
+            {
+                if (File.Exists("Odin.txt"))
+                    proceed = true;
+                else
+                    Console.WriteLine("file not found");
+                    gogogo = false;
+
+                while (proceed)
+                {
+                    segregator();
+                    Console.WriteLine(lines);
+                    Console.ReadKey();
+                }
+            }
+            Console.ReadKey();
+        }
+
+        static List<string> segregator()
+        {
+            //string[] words = new string[] { };
+            List<string> lines = new List<string>();            
+            int wordCount = 0;
             string line = "";
 
             using (StreamReader sr = new StreamReader("Odin.txt"))
             {
+
                 while ((line = sr.ReadLine()) != null)
                 {
-                    words = line.Split(' ');
+                    if (line.Length > 0)
+                        lines.Add(line);
+                }
+              
+            }
+            return lines;
+        }
 
-                    for (int xx = 0; xx < words.Length; xx++)
+        static string[] mainlogic (List<string> lines, string[] words, Dictionary<string, int> breakdown)
+        {
+            int wordCount = 0;
+            foreach (string l in lines)
+            {
+                words = l.Split(' ');
+                for (int x = 0; x < words.Length; x++)
+                //foreach(string word in words)
+                {
+                    if (words[x].Length > 0)
                     {
-                        phrase.Add(words[xx]);
+
+                        if (breakdown.ContainsKey(words[x].ToLower()))
+                            breakdown[words[x].ToLower()] += 1;
+                        else
+                            breakdown[words[x].ToLower()] = 1;
+
+                        wordCount++;
                     }
                 }
             }
-        }
-
-        static bool readfile()
-        {
-
+            return 
         }
     }
 }
