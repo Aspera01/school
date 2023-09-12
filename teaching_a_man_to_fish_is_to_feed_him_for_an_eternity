@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace teaching_a_man_to_fish_is_to_feed_him_for_an_eternity
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<string, int> breakdown = new Dictionary<string, int>();
+            Dictionary<string, int> sortedBD = new Dictionary<string, int>();
+            int wordCount = 0;
+            List<string> lines = new List<string>();
+            string[] words = new string[] { };
+
+            int leastCount = 0;
+            string sortKey = "";
+
+            char[] letters = { };
+
+            string fileName = "Odin.txt";
+
+            string outputFile = "";
+
+            //string outputFile = "Odin.txt";
+            newfileWriter(outputFile);
+        }
+
+        //reader
+        static void reader()
+        {
+            string line = "";
+            using (StreamReader sr = new StreamReader("Odin.txt"))
+            {
+                while ((line = sr.ReadLine()) != null)
+                {
+                    if (line.Length > 0)
+                        lines.Add(line);
+                }
+            }
+        }
+
+        //counter
+
+        //breakdown
+
+        //filter
+
+        //newfile
+        static void newfileWriter(string outputFile)
+        {
+            Console.WriteLine("LMAO");
+            Console.ReadKey();
+        }
+    }
+}
