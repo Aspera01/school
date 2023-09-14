@@ -1,0 +1,87 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace a_tic_known_not_as_tac_is_neither_but_naught
+{
+    internal class Program
+    {
+        static string[,] _battlefield = new string[3, 3];       
+        static List<int> _position = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 }; //make something that change inside of list into chars when making a move
+        static List<char> _weapons = new List<char> { 'X', 'O' };
+        static int _move = 0;
+        static void Main(string[] args)
+        {
+            string[,] map = new string[3, 3];
+            
+            bool war = true;
+            Console.WriteLine("Are you ready?");
+            Console.ReadKey();
+
+            generator(map, _position);
+            Console.ReadKey();
+            while (war == true)
+            {
+                player(_battlefield, _position, out _move);
+                //tactics(map, _weapons, _position, _move);
+            }
+
+        }
+        //battlefield generator
+        static string[,] generator(string[,] map, List <int> _positions)
+        {
+            Console.Clear();
+            int z = 0;
+            for (int x = 0; x < 3; x++)
+            {
+                Console.WriteLine("\n--------------------");
+                for (int y = 0; y < 3; y++)
+                {
+
+                    Console.Write( _positions[z] + "\t");
+                    z++;
+                }
+                
+            }
+            Console.WriteLine("\n--------------------");
+            Console.WriteLine();           
+            Console.Write("THE NUMBERS ARE YOUR POSITIONS");
+            return map;
+        }
+        //weapons picker
+
+        static string[,] player(string[,] _battlefield, List<int> _position, out int _move)
+        {
+            Console.Write("X Player please, where do you position your X?\n");
+            _move = int.Parse(Console.ReadLine());           
+            return _battlefield;
+        }
+
+        //put in
+
+        //static string[,] tactics(string [,] map, List<char> _weapons, List<int> _position, int move)
+        //{
+        //    //Console.Clear();
+        //    //int z = 0;
+        //    for (int x = 0; x < 3; x++)
+        //    {
+        //        Console.WriteLine("\n--------------------");
+        //        for (int y = 0; y < 3; y++)
+        //        {
+                   
+        //            Console.Write(_weapons[move] + "\t");                    
+        //        }
+
+        //    }
+        //    Console.WriteLine("\n--------------------");
+        //    Console.WriteLine();
+        //    Console.ReadKey();
+        //    return map;
+        //}
+
+        //displayer
+    }
+}
