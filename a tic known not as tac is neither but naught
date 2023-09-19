@@ -6,82 +6,140 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace a_tic_known_not_as_tac_is_neither_but_naught
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Media;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace @fixed
 {
     internal class Program
     {
-        static string[,] _battlefield = new string[3, 3];       
-        static List<int> _position = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 }; //make something that change inside of list into chars when making a move
-        static List<char> _weapons = new List<char> { 'X', 'O' };
+        static char[] _battlefield = new char[9];
+        static List<int> _position = new List<int>();
         static int _move = 0;
+        static int _temp = 0;
+        //static bool _pTurn = false;
+        //static bool _cTurn = false;
         static void Main(string[] args)
         {
-            string[,] map = new string[3, 3];
-            
+            game();
+        }
+        static void game()
+        {
+            int[] layout = new int[9] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
             bool war = true;
+            bool pTurn = false;
+            bool cTurn = false;
+            Random rnd = new Random();
+
             Console.WriteLine("Are you ready?");
             Console.ReadKey();
-
-            generator(map, _position);
-            Console.ReadKey();
-            while (war == true)
+            layoutgenerator(layout);
+            while(war == true)
             {
-                player(_battlefield, _position, out _move);
-                //tactics(map, _weapons, _position, _move);
-            }
+                pTurn = player(out _move, pTurn, _position);
+                war = warfare(_position, war);
 
+                orders(_battlefield, _move, pTurn, cTurn);
+                    pTurn = false;
+
+                battlegrounds(_battlefield);
+                war = warfare(_position, war);
+                if (war == false)
+                    break;
+                cTurn = computer(out _move, cTurn, rnd, _position);
+
+                orders(_battlefield, _move, pTurn, cTurn);
+                cTurn = false;
+
+                battlegrounds(_battlefield);
+                war = warfare(_position, war);
+
+            }
+            Console.WriteLine("its joever");
+            Console.ReadKey();
         }
-        //battlefield generator
-        static string[,] generator(string[,] map, List <int> _positions)
+        static int[] layoutgenerator(int[]layout)
         {
             Console.Clear();
-            int z = 0;
-            for (int x = 0; x < 3; x++)
+            int num = 0;
+            for(int x = 0; x < 3; x++)
             {
-                Console.WriteLine("\n--------------------");
-                for (int y = 0; y < 3; y++)
+                Console.WriteLine("_____________________________________");
+                Console.Write("|     ");
+                for(int y = 0; y < 3; y++)
                 {
-
-                    Console.Write( _positions[z] + "\t");
-                    z++;
+                    Console.Write(layout[num] + "     |     ");
+                    num++;
                 }
-                
-            }
-            Console.WriteLine("\n--------------------");
-            Console.WriteLine();           
-            Console.Write("THE NUMBERS ARE YOUR POSITIONS");
-            return map;
-        }
-        //weapons picker
 
-        static string[,] player(string[,] _battlefield, List<int> _position, out int _move)
+                Console.WriteLine();
+            }
+            Console.WriteLine("_____________________________________");
+            Console.WriteLine("THESE NUMBERS REPRESENT MOVE SPOTS!");
+            return layout;
+        }
+        static bool player(out int _move, bool _pTurn, List<int> _position)
         {
-            Console.Write("X Player please, where do you position your X?\n");
-            _move = int.Parse(Console.ReadLine());           
+            _move = 0;
+            Console.Write("Pick a spot to make your move!\n");
+            _move = int.Parse(Console.ReadLine());
+            _position.Remove(_move);
+            return true;
+        }
+        static bool computer(out int _move, bool _cTurn, Random rnd, List<int> _position)
+        {
+            _move = 0;
+            Console.Write("Computer is currently thinking...\n");
+            Thread.Sleep(3000);
+            _temp = rnd.Next(0,_position.Count);
+            _move = _position[_temp];
+            _position.Remove(_move);
+            return true;
+        }
+        static char[] orders(char[] _battlefield, int _move, bool _pTurn, bool _cTurn)
+        {
+            if(_pTurn == true)
+            {
+                _battlefield[_move] = 'X';
+            }
+            if(_cTurn == true)
+            {
+                _battlefield[_move] = 'O';
+            }
             return _battlefield;
         }
-
-        //put in
-
-        //static string[,] tactics(string [,] map, List<char> _weapons, List<int> _position, int move)
-        //{
-        //    //Console.Clear();
-        //    //int z = 0;
-        //    for (int x = 0; x < 3; x++)
-        //    {
-        //        Console.WriteLine("\n--------------------");
-        //        for (int y = 0; y < 3; y++)
-        //        {
-                   
-        //            Console.Write(_weapons[move] + "\t");                    
-        //        }
-
-        //    }
-        //    Console.WriteLine("\n--------------------");
-        //    Console.WriteLine();
-        //    Console.ReadKey();
-        //    return map;
-        //}
-
-        //displayer
+        static bool warfare(List<int> _position, bool war)
+        {
+            if (_position.Count == 0)
+            {
+                return false;
+            }
+            else 
+                return true;
+        }
+        static char[] battlegrounds(char[] _battlefield)
+        {
+            int num = 0;
+            for(int x = 0; x < 3; x++)
+            {
+                Console.WriteLine("______________________________________");
+                Console.Write("|     ");
+                for(int y = 0; y < 3; y++)
+                {
+                    Console.Write(_battlefield[num] + "     |     ");
+                    num++;
+                }
+                
+                Console.WriteLine();
+            }
+            Console.WriteLine("_____________________________________");
+            Console.ReadKey();
+            return _battlefield;
+        }
     }
 }
