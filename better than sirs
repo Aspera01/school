@@ -116,9 +116,23 @@ namespace gdggfg
                 return true;
         }
         
-        static bool Victory(char[] battlefield, bool pTurn, bool cturn)
+        static bool Victory(char[] _battlefield, bool pTurn, bool cturn)
         {
-
+            bool decision = true;
+            if (pTurn == true)
+            {
+                decision = true;
+                for (int x = 0; x < _battlefield.Length; x++)
+                {
+                    if (_battlefield[x] != 'X' && _battlefield[x] != 'X' && _battlefield[x] != 'X')
+                    {
+                        decision = false;
+                        break;
+                    }
+                }
+                
+            }
+            return true;
         }
         static char[] battlegrounds(char[] _battlefield)
         {
