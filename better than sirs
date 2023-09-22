@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace here_it_is
+namespace OOP___PP3
 {
     internal class Program
     {
         static Random _rnd = new Random();
-        
+
 
         static void Main(string[] args)
         {
@@ -45,7 +44,7 @@ namespace here_it_is
         {
             bool playerTurn = playerFirst;
             int[] moveCoord = { };
-            char[,] mastermind = new char[3,3];
+            char[,] mastermind = new char[3, 3];
             List<int> boardState = new List<int>();
 
             for (int x = 1; x <= 9; x++)
@@ -121,10 +120,10 @@ namespace here_it_is
             return moveCoords;
         }
 
-        static int[] ComputerMove(List<int> boardState)
+        static int[] ComputerMove(List<int> boardState, char[,] board, bool playerturn)
         {
             int[] moveCoords = new int[] { 0, 0 };
-            int boardMove = boardState[_rnd.Next(boardState.Count)];
+            int boardMove = Virtuoso(board, playerturn, boardState);
             moveCoords[1] = boardMove % 3;
             moveCoords[0] = (boardMove - moveCoords[1]) / 3;
             Console.WriteLine("Bro is thinking...");
@@ -171,13 +170,15 @@ namespace here_it_is
         {
             return (3 * moveCoord[0]) + moveCoord[1];
         }
-        static char[,] Virtuoso(char [,] board)
+
+        //THE BEST AI
+        static char[,] Virtuoso(char[,] board, bool playerturn, List<int> boardState)
         {
-            int col = 0;
-            for (int y = 0; y < board.GetLength(0); y++)
+            if (board[1, 1] == ' ')
             {
-                
+                boardstate
             }
+
             return board;
         }
 
