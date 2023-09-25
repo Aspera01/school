@@ -1,24 +1,45 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace here_it_is
+namespace OOP___PP3
 {
     internal class Program
     {
         static Random _rnd = new Random();
-
+        static int _games = 0;
+        static int _maxWins = 3;
+        static int _maxGames = 0;
+        static int _comp = 0;
+        static int _player = 0;
+        static bool _starter = true;
 
         static void Main(string[] args)
         {
-            while (true)
+            while (_starter)
             {
+                Console.WriteLine("Current games: " + _games);
+                Console.WriteLine("Wins by player(O): " + _player + "\t Wins by computer(X): " + _comp);
+                if (_player == _maxWins || _comp == _maxWins)
+                {
+                    Console.WriteLine("good job");
+                    _starter = false;
+                }
+                if (_games > 5)
+                {
+                    _starter = false;
+                }
+                Console.ReadKey();
                 GameStart(true, InitializeBoard());
+                _games++;
+                
+
             }
+            Console.WriteLine("gg");
+            Console.ReadKey();
         }
 
         static bool PlayerFirstMove()
@@ -57,7 +78,7 @@ namespace here_it_is
                 if (playerTurn)
                     moveCoord = PlayerMove();
                 else
-                    moveCoord = ComputerMove(boardState);
+                    moveCoord = ComputerMove(boardState, board);
 
                 if (ValidateMove(board, moveCoord))
                 {
@@ -65,6 +86,14 @@ namespace here_it_is
                     boardState.Remove(CalculateForBoardState(moveCoord));
                     if (CheckVictory(board, playerTurn))
                     {
+                        if (playerTurn)
+                        {
+                            _player++;
+                        }
+                        if (!playerTurn)
+                        {
+                            _comp++;
+                        }
                         Console.WriteLine("Congratulations!!!!");
                         Console.ReadKey();
                         break;
@@ -78,7 +107,7 @@ namespace here_it_is
                 }
                 DisplayBoard(board);
 
-                if (boardState.Count == 0)
+                if (boardState.Count <= 1)
                 {
                     Console.WriteLine("No more possible moves.");
                     Console.ReadKey();
@@ -128,7 +157,7 @@ namespace here_it_is
             moveCoords[1] = boardMove % 3;
             moveCoords[0] = (boardMove - moveCoords[1]) / 3;
             Console.WriteLine("Bro is thinking...");
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
             return moveCoords;
         }
 
@@ -167,7 +196,7 @@ namespace here_it_is
             return board;
         }
 
-          static int CalculateForBoardState(int[] moveCoord)
+        static int CalculateForBoardState(int[] moveCoord)
         {
             return (3 * moveCoord[0]) + moveCoord[1];
         }
@@ -176,33 +205,278 @@ namespace here_it_is
         static int Virtuoso(List<int> boardState, char[,] board)
         {
             int temp = 0;
+            int x = 0;
+            int y = 0;
             bool firstTurn = false;
+
+            
             if (boardState.Count < 9)
             {
                 firstTurn = false;
             }
             else if (boardState.Count == 9)
             {
-                firstTurn= true;
+                firstTurn = true;
             }
 
 
             if (firstTurn)
             {
-                if (board[1, 1] != 'X')
+                temp = 4;
+            }
+
+            else if (!firstTurn)
+            {
+
+                //comp fmove
+                if (firstTurn && boardState.Count == 9)
                 {
-                    temp = 5;
+                    temp = 4;
+                    return temp;
+
+                }
+                //comp sec move
+                else if (boardState.Count == 7)
+                {
+                    if (board[1, 1] == 'X')
+                    {
+                        temp = 4;
+                        while (temp == 4)
+                        {
+                            temp = _rnd.Next(0, 9);
+                            //return temp;
+                        }
+                    }
+                    else
+                        temp = 4;
+                    //return temp;
+                }
+                //x = xx;
+                //y = yy;
+                //x++;
+                //y++;
+                //temp = converter(x, y);
+                //return temp;
+                if (boardState.Count == 0)
+                {
+                    return 0;
+                }
+                //the rest of the moves
+
+                //rows 1st
+                if (board[0, 0] == 'O' && board[0, 1] == 'O' && board[0, 2] == ' ')
+                {
+                    x = 0;
+                    y = 2;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[0, 0] == 'O' && board[0, 1] == ' ' && board[0, 2] == 'O')
+                {
+                    x = 0;
+                    y = 1;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[0, 0] == ' ' && board[0, 1] == 'O' && board[0, 2] == 'O')
+                {
+                    x = 0;
+                    y = 0;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                //rows 2nd
+                if (board[1, 0] == 'O' && board[1, 1] == 'O' && board[1, 2] == ' ')
+                {
+                    x = 1;
+                    y = 2;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[1, 0] == 'O' && board[1, 1] == ' ' && board[1, 2] == 'O')
+                {
+                    x = 1;
+                    y = 1;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[1, 0] == ' ' && board[1, 1] == 'O' && board[1, 2] == 'O')
+                {
+                    x = 1;
+                    y = 0;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                //rows 3rd
+                if (board[2, 0] == 'O' && board[2, 1] == 'O' && board[2, 2] == ' ')
+                {
+                    x = 2;
+                    y = 2;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[2, 0] == 'O' && board[2, 1] == ' ' && board[2, 2] == 'O')
+                {
+                    x = 2;
+                    y = 1;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[2, 0] == ' ' && board[2, 1] == 'O' && board[2, 2] == 'O')
+                {
+                    x = 2;
+                    y = 0;
+                    temp = converter(x, y);
+                    return temp;
+                }
+
+
+                //cols 1st
+                if (board[0, 0] == 'O' && board[1, 0] == 'O' && board[2, 0] == ' ')
+                {
+                    x = 2;
+                    y = 0;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[0, 0] == 'O' && board[1, 0] == ' ' && board[2, 0] == 'O')
+                {
+                    x = 1;
+                    y = 0;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[0, 0] == ' ' && board[1, 0] == 'O' && board[2, 0] == 'O')
+                {
+                    x = 0;
+                    y = 0;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                //cols 2nd
+                if (board[0, 1] == 'O' && board[1, 1] == 'O' && board[2, 1] == ' ')
+                {
+                    x = 2;
+                    y = 1;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[0, 1] == 'O' && board[1, 1] == ' ' && board[2, 1] == 'O')
+                {
+                    x = 1;
+                    y = 1;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[0, 1] == ' ' && board[1, 1] == 'O' && board[2, 1] == 'O')
+                {
+                    x = 0;
+                    y = 1;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                //cols 3rd
+                if (board[0, 2] == 'O' && board[1, 2] == 'O' && board[2, 2] == ' ')
+                {
+                    x = 2;
+                    y = 2;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[0, 2] == 'O' && board[1, 2] == ' ' && board[2, 2] == 'O')
+                {
+                    x = 1;
+                    y = 2;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[0, 2] == ' ' && board[1, 2] == 'O' && board[2, 2] == 'O')
+                {
+                    x = 0;
+                    y = 2;
+                    temp = converter(x, y);
+                    return temp;
+                }
+
+                //diags
+                if (board[0, 0] == 'O' && board[1, 1] == 'O' && board[2, 2] == ' ')
+                {
+                    x = 2;
+                    y = 2;
+                    temp = converter(x, y);
+                    return temp;
+                }                
+                if (board[0, 0] == 'O' && board[1, 1] == ' ' && board[2, 2] == 'O')
+                {
+                    x = 1;
+                    y = 1;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[0, 0] == ' ' && board[1, 1] == 'O' && board[2, 2] == 'O')
+                {
+                    x = 0;
+                    y = 0;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                //diag 2nd
+                if (board[0, 2] == 'O' && board[1, 1] == 'O' && board[2, 0] == ' ')
+                {
+                    x = 2;
+                    y = 0;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[0, 2] == 'O' && board[1, 1] == ' ' && board[2, 0] == 'O')
+                {
+                    x = 1;
+                    y = 1;
+                    temp = converter(x, y);
+                    return temp;
+                }
+                if (board[0, 2] == ' ' && board[1, 1] == 'O' && board[2, 0] == 'O')
+                {
+                    x = 0;
+                    y = 2;
+                    temp = converter(x, y);
+                    return temp;
                 }
                 else
                 {
-                    while(temp == 5 || temp == 0)
-                    temp = _rnd.Next(1,9);
+                    temp = (_rnd.Next(0, 4) * 2) + 1;
+                    return temp;
                 }
+                
             }
 
             return temp;
         }
 
+        static int converter(int x, int y)
+        {
+            int pmet = 0;
+            if (x == 0 && y == 0)
+                pmet = 0;
+            if (x == 0 && y == 1)
+                pmet = 1;
+            if (x == 0 && y == 2)
+                pmet = 2;
+            if (x == 1 && y == 0)
+                pmet = 3;
+            if (x == 1 && y == 1)
+                pmet = 4;
+            if (x == 1 && y == 2)
+                pmet = 5;
+            if (x == 2 && y == 0)
+                pmet = 6;
+            if (x == 2 && y == 1)
+                pmet = 7;
+            if (x == 2 && y == 2)
+                pmet = 8;
+
+            return pmet;
+        }
         static bool CheckVictory(char[,] board, bool playerTurn)
         {
             char checkFor = 'X';
