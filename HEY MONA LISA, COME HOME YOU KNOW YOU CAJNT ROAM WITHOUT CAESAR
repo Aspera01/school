@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace come_home_monalis_you_know_cant_rome_without_caesar
+{
+    internal class Program
+    {
+        static List<char> _alphabet = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+        static List<char> _caesared = new List<char>();
+        static void Main(string[] args)
+        {
+            MEMEME();
+        }
+        //unreal real main
+        static void MEMEME()
+        {
+            //List<char> alphabet = new List<char> {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z' };
+            //List<char> caesared = new List<char>();
+            char choice = ' ';
+            string key = "";
+            string keyWord = "";
+
+            while (true)
+            {
+                Console.WriteLine("To cipher (C) or de-cipher? (D)");
+                choice = Convert.ToChar(Console.ReadLine().ToUpper());
+
+                if (choice == 'C')
+                {
+                    Console.WriteLine("Input key: ");
+                    key = Console.ReadLine().ToUpper();
+                    Console.Clear();
+                    Console.WriteLine("Input words to cipher");
+                    keyWord = Console.ReadLine().ToUpper();
+                    Console.Clear();
+                    shifter(_alphabet, _caesared, key);
+                    cipherer(keyWord, _caesared, _alphabet);
+                }
+                else if (choice == 'D')
+                {
+
+                }
+                else
+                {
+                    Console.WriteLine("invalid answer, pick again!");
+                }
+            }
+
+        }
+        //shifter
+        static void shifter(List<char> _alphabet, List<char> _caesared, string key)
+        {
+            for(int i = 0; i < key.Length; i++)
+            {
+                _caesared.Add(key[i]);
+            }
+            for(int j = 0; j < _alphabet.Count; j++)
+            {
+                if (!_caesared.Contains(_alphabet[j]))
+                {
+                    _caesared.Add(_alphabet[j]);
+                }    
+            }         
+        }
+        //cipherer
+        static string cipherer(string keyWord, List<char> _caesared, List<char> _alphabet)
+        {
+            string[] secret = new string[keyWord.Length];
+            for(int x = 0; x < keyWord.Length; x++)
+            {
+                for (int y = 0; y < _caesared.Count; y++)
+                {
+                    if (keyWord[x] == _alphabet[y])
+                    {
+                        secret[x] = Convert.ToString(_caesared[y]);
+                        break;
+                    }
+                }
+            }
+            Console.ReadKey();
+
+            return keyWord;
+        }
+
+        //de-cipherer
+        //static string decipherer(string theCiphered)
+        //{
+        //    return theCiphered;
+        //}
+
+
+    }
+}
