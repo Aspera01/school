@@ -1,19 +1,18 @@
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace come_home_monalis_you_know_cant_rome_without_caesar
+namespace OOP_prelim___Villanueva_
 {
     internal class Program
     {
-        static List<char> _alphabet = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-        static List<char> _specchar = new List<char> { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '[', ']', '{', '}',';','"',':','\'','<','>',',','.','/','?','\\','|',' ' };
-        static List<char> _nums = new List<char> {'1','2','3','4','5','6','7','8','9','0' };
+        static List<char> _alphabet = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+        static List<char> _specchar = new List<char> { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '[', ']', '{', '}', ';', '"', ':', '\'', '<', '>', ',', '.', '/', '?', '\\', '|', ' ' };
+        static List<char> _nums = new List<char> { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
         static string _keyWord = "";
         static void Main(string[] args)
         {
@@ -81,16 +80,16 @@ namespace come_home_monalis_you_know_cant_rome_without_caesar
                     if (!_specchar.Contains(key[i]) && !_nums.Contains(key[i]))
                     {
                         _caesared.Add(key[i]);
-                    }                 
-                }       
+                    }
+                }
             }
             for (int j = 0; j < _alphabet.Count; j++)
             {
                 if (!_caesared.Contains(_alphabet[j]))
                 {
-                    
+
                     _caesared.Add(_alphabet[j]);
-                    
+
                 }
             }
         }
@@ -107,19 +106,19 @@ namespace come_home_monalis_you_know_cant_rome_without_caesar
                         secret[x] = _keyWord[x] + "";
                         break;
                     }
-                   
+
                     if (_keyWord[x] == _alphabet[y])
-                    {                       
+                    {
 
                         secret[x] = _caesared[y] + "";
                         break;
-                        
+
                     }
 
-                    else if (_keyWord[x] == ' ')
-                    {
-                        secret[x] = " ";
-                    }
+                    //else if (_keyWord[x] == ' ')
+                    //{
+                    //    secret[x] = " ";
+                    //}
                 }
             }
             return secret;
@@ -150,7 +149,7 @@ namespace come_home_monalis_you_know_cant_rome_without_caesar
                 }
             }
             Console.WriteLine("The decoded message is: ");
-            foreach(string w in unsecret)
+            foreach (string w in unsecret)
             {
                 Console.Write(w);
             }
@@ -172,7 +171,7 @@ namespace come_home_monalis_you_know_cant_rome_without_caesar
             }
         }
         //fileWriter
-        static string SecretReader (string _keyWord)
+        static string SecretReader(string _keyWord)
         {
 
             string scanned = "";
@@ -184,10 +183,9 @@ namespace come_home_monalis_you_know_cant_rome_without_caesar
                 }
             }
             return _keyWord;
-            
+
 
         }
 
     }
 }
-
