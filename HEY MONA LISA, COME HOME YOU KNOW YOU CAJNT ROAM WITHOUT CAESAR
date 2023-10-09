@@ -22,10 +22,8 @@ namespace come_home_monalis_you_know_cant_rome_without_caesar
         //unreal real main
         static void MEMEME()
         {
-            //List<char> caesared = new List<char>();
             char choice = ' ';
             string key = "";
-            //string keyWord = "";
             bool thing = true;
 
             while (thing)
@@ -64,6 +62,8 @@ namespace come_home_monalis_you_know_cant_rome_without_caesar
                 else
                 {
                     Console.WriteLine("invalid answer, pick again!");
+                    Console.ReadKey();
+                    Console.Clear();
                 }
             }
             Console.WriteLine("\nYour command has been finished");
@@ -102,13 +102,11 @@ namespace come_home_monalis_you_know_cant_rome_without_caesar
             {
                 for (int y = 0; y < _caesared.Count; y++)
                 {
-                    //this a new lien of code
                     if (_specchar.Contains(_keyWord[x]) || _nums.Contains(_keyWord[x]))
                     {
                         secret[x] = _keyWord[x] + "";
                         break;
                     }
-                    //this a new line ^^
                    
                     if (_keyWord[x] == _alphabet[y])
                     {                       
@@ -159,7 +157,7 @@ namespace come_home_monalis_you_know_cant_rome_without_caesar
             return unsecret;
         }
 
-        //read and write
+        //fileReader
         static void SecretWriter(string[] keyWord, char choice)
         {
             if (choice == 'C')
@@ -173,11 +171,11 @@ namespace come_home_monalis_you_know_cant_rome_without_caesar
                 }
             }
         }
+        //fileWriter
         static string SecretReader (string _keyWord)
         {
 
             string scanned = "";
-            //List<string> lines = new List<string>();
             using (StreamReader sr = new StreamReader("secret.txt"))
             {
                 while ((scanned = sr.ReadLine()) != null)
