@@ -1,0 +1,83 @@
+CREATE TABLE AttendeesStatus (
+AttendeesStatus_ID INT PRIMARY KEY,
+AttendeesStatus_Desc VARCHAR(50));
+
+CREATE TABLE Attendees (
+Attendee_ID INT PRIMARY KEY,
+Attendee_SurName VARCHAR(50) NOT NULL,
+Attendee_GivenName VARCHAR(50) NOT NULL,
+Attendee_MiddleName VARCHAR(50) NOT NULL,
+Attendee_Sex VARCHAR(10) NOT NULL,
+Attendee_School VARCHAR (50) NOT NULL,
+Attendee_SchoolAddress VARCHAR(50) NOT NULL,
+Attendee_ContactNumber INT NOT NULL,
+Attendee_Email VARCHAR(50) NOT NULL,
+AttendeeStatus_ID INT FOREIGN KEY 
+REFERENCES AttendeesStatus(AttendeesStatus_ID));
+
+CREATE TABLE Reservation (
+Reservation_ID CHAR PRIMARY KEY,
+Attendee_ID INT FOREIGN KEY,
+Event_ID INT FOREIGN KEY,
+Payment_ID INT FOREIGN KEY,
+Reservation_Quality INTEGER NOT NULL,
+Reservation_MadeDate DATE NOT NULL,
+PaymentStatus_ID INTEGER FOREIGN KEY,
+Reservation_Note VARCHAR(50),
+Staff_ID INT FOREIGN KEY
+REFERENCES Staff(Staff_ID));
+
+CREATE TABLE Event (
+Event_ID INT PRIMARY KEY,
+EVENT_Name VARCHAR(50),
+EventType_ID INT FOREIGN KEY,
+Event_Date DATE,
+EventStatus_ID INT FOREIGN KEY
+Staff_ID INT FOREIGN KEY);
+
+CREATE TABLE EventType (
+EventType_ID INT PRIMARY KEY,
+EventType_Descw VARCHAR (50));
+
+CREATE TABLE PaymentStatus (
+PaymentStatus_ID INT PRIMARY KEY,
+PaymentStatus_Desc VARCHAR (50));
+
+CREATE TABLE Staff (
+Staff_ID INT PRIMARY KEY,
+Staff_Name VARCHAR(50),
+Staff_UserName VARCHAR(50),
+Staff_Password VARCHAR(50),
+Staff_Email VARCHAR(50),
+Staff_ContactNumber INT,
+StaffRole_ID INT FOREIGN KEY,
+StaffStatus_ID INT FOREIGN KEY);
+
+CREATE TABLE StaffStatus (
+StaffStatus_ID INT PRIMARY KEY,
+StaffStatus_Desc VARCHAR (50));
+
+CREATE TABLE Attendance (
+Attendance_ID INT PRIMARY KEY,
+Attendees_ID INT FOREIGN KEY,
+Reservation_ID CHAR FOREIGN KEY(10),
+Attendance_Time TIME,
+Attendance_Date DATE,
+AttendanceStatus_ID INT FOREIGN KEY,
+Staff_ID INT FOREIGN KEY);
+
+CREATE TABLE AttendanceStatus (
+AttendanceStatus_ID INT PRIMARY KEY,
+AttendanceStatus_Desc VARCHAR(50));
+
+CREATE TABLE Payment (
+Payment_ID INT PRIMARY KEY,
+Payment_Desc VARCHAR(50));
+
+CREATE TABLE EventStatus (
+EventStatus_ID INT PRIMARY KEY,
+EventStatus_Desc VARCHAR (50));
+
+CREATE TABLE StaffRole (
+StaffRole_ID INT PRIMARY KEY,
+StaffRole_Desc VARCHAR(50));
